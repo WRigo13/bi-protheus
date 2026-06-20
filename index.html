@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BI para Protheus</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0D0F14; --surface: #161A22; --surface2: #1C2130;
+  --border: #232834; --accent: #0066FF; --accent2: #00C2FF;
+  --text: #E8ECF2; --muted: #7A8599; --green: #00D48A;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+/* PAGE SYSTEM */
+.page { display: none; }
+.page.active { display: block; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 40px;
+  background: rgba(13,15,20,0.92);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo { font-family: var(--font-display); font-weight: 700; font-size: 15px; letter-spacing: 0.04em; color: var(--text); cursor: pointer; }
+.nav-logo span { color: var(--accent); }
+.nav-links { display: flex; align-items: center; gap: 32px; }
+.nav-link { font-size: 14px; color: var(--muted); cursor: pointer; transition: color 0.2s; background: none; border: none; font-family: var(--font-body); }
+.nav-link:hover { color: var(--text); }
+/* PULSE ANIMATIONS */
+@keyframes pulse-blue {
+  0%   { box-shadow: 0 0 0 0 rgba(0,102,255,0.55); }
+  70%  { box-shadow: 0 0 0 10px rgba(0,102,255,0); }
+  100% { box-shadow: 0 0 0 0 rgba(0,102,255,0); }
+}
+@keyframes pulse-green {
+  0%   { box-shadow: 0 0 0 0 rgba(37,211,102,0.55); }
+  70%  { box-shadow: 0 0 0 12px rgba(37,211,102,0); }
+  100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
+}
+
+.nav-cta { background: var(--accent); color: #fff; font-family: var(--font-display); font-weight: 700; font-size: 13px; letter-spacing: 0.04em; padding: 10px 20px; border-radius: 6px; text-decoration: none; transition: background 0.2s; border: none; cursor: pointer; animation: pulse-blue 2s ease-out infinite; }
+.nav-cta:hover { background: #0052cc; animation: none; box-shadow: none; }
+
+/* HERO */
+.hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 120px 40px 80px; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -200px; right: -200px; width: 700px; height: 700px; background: radial-gradient(circle, rgba(0,102,255,0.12) 0%, transparent 70%); pointer-events: none; }
+.hero::after { content: ''; position: absolute; bottom: -100px; left: -100px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(0,194,255,0.07) 0%, transparent 70%); pointer-events: none; }
+.hero-inner { max-width: 900px; position: relative; z-index: 1; }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-display); font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent2); margin-bottom: 28px; }
+.eyebrow::before { content: ''; display: block; width: 24px; height: 1px; background: var(--accent2); }
+h1 { font-family: var(--font-display); font-size: clamp(36px, 6vw, 72px); font-weight: 700; line-height: 1.08; letter-spacing: -0.02em; margin-bottom: 28px; }
+h1 em { font-style: normal; background: linear-gradient(90deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero-sub { font-size: 18px; color: var(--muted); max-width: 580px; line-height: 1.7; margin-bottom: 44px; }
+.hero-actions { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+.btn-primary { display: inline-flex; align-items: center; gap: 10px; background: var(--accent); color: #fff; font-family: var(--font-display); font-weight: 700; font-size: 15px; padding: 14px 28px; border-radius: 8px; text-decoration: none; transition: background 0.2s, transform 0.15s; border: none; cursor: pointer; animation: pulse-blue 2s ease-out infinite; }
+.btn-primary:hover { background: #0052cc; transform: translateY(-1px); animation: none; box-shadow: none; }
+.btn-ghost { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 14px; text-decoration: none; padding: 14px 0; transition: color 0.2s; background: none; border: none; cursor: pointer; font-family: var(--font-body); }
+.btn-ghost:hover { color: var(--text); }
+
+/* TRUST */
+.trust { padding: 36px 40px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.trust-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
+.trust-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+.trust-badges { display: flex; gap: 12px; flex-wrap: wrap; }
+.badge { font-family: var(--font-display); font-size: 13px; font-weight: 500; color: var(--muted); border: 1px solid var(--border); padding: 6px 14px; border-radius: 4px; }
+
+/* SECTIONS */
+section { padding: 96px 40px; }
+.section-inner { max-width: 900px; margin: 0 auto; }
+.section-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 16px; }
+h2 { font-family: var(--font-display); font-size: clamp(28px, 4vw, 44px); font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 20px; }
+.section-desc { color: var(--muted); font-size: 17px; max-width: 540px; line-height: 1.7; margin-bottom: 56px; }
+
+/* PROBLEM GRID */
+.problem-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.problem-card { background: var(--surface); padding: 32px; }
+.problem-icon { font-size: 24px; margin-bottom: 16px; }
+.problem-card h3 { font-family: var(--font-display); font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+.problem-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+/* STEPS */
+.steps { display: flex; flex-direction: column; }
+.step { display: grid; grid-template-columns: 48px 1fr; gap: 24px; padding: 36px 0; border-bottom: 1px solid var(--border); }
+.step:last-child { border-bottom: none; }
+.step-num { font-family: var(--font-display); font-size: 13px; font-weight: 700; color: var(--accent); letter-spacing: 0.06em; padding-top: 4px; }
+.step h3 { font-family: var(--font-display); font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+.step p { color: var(--muted); font-size: 15px; line-height: 1.65; }
+
+/* STATS */
+.stats-bg { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 48px; }
+.stat-num { font-family: var(--font-display); font-size: 48px; font-weight: 700; line-height: 1; margin-bottom: 8px; }
+.stat-num span { color: var(--accent); }
+.stat-label { font-size: 14px; color: var(--muted); line-height: 1.5; }
+
+/* AUDIENCE */
+.audience-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.audience-card { border: 1px solid var(--border); border-radius: 10px; padding: 28px; background: var(--surface); transition: border-color 0.2s; }
+.audience-card:hover { border-color: var(--accent); }
+.audience-icon { font-size: 28px; margin-bottom: 16px; }
+.audience-card h3 { font-family: var(--font-display); font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+.audience-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+/* SOBRE */
+.sobre-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+.sobre-text p { color: var(--muted); font-size: 16px; line-height: 1.75; margin-bottom: 20px; }
+.sobre-text p:last-child { margin-bottom: 0; }
+.sobre-text strong { color: var(--text); font-weight: 500; }
+.certs { display: flex; flex-direction: column; gap: 10px; }
+.cert { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; font-size: 14px; }
+.cert-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+
+/* CTA FINAL */
+.cta-section { text-align: center; background: linear-gradient(135deg, rgba(0,102,255,0.08), rgba(0,194,255,0.05)); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.cta-section h2 { margin-bottom: 16px; }
+.cta-section p { color: var(--muted); font-size: 17px; margin-bottom: 40px; max-width: 460px; margin-left: auto; margin-right: auto; }
+.wpp-btn { display: inline-flex; align-items: center; gap: 12px; background: #25D366; color: #fff; font-family: var(--font-display); font-weight: 700; font-size: 16px; padding: 16px 32px; border-radius: 8px; text-decoration: none; transition: background 0.2s, transform 0.15s; box-shadow: 0 0 40px rgba(37,211,102,0.2); animation: pulse-green 2s ease-out infinite; }
+.wpp-btn:hover { background: #1eb756; transform: translateY(-2px); animation: none; }
+.wpp-icon { width: 22px; height: 22px; fill: #fff; flex-shrink: 0; }
+
+/* BLOG LIST */
+.blog-header { padding: 120px 40px 48px; border-bottom: 1px solid var(--border); }
+.blog-header .section-label { margin-bottom: 12px; }
+.blog-header h2 { margin-bottom: 0; }
+.blog-grid { max-width: 900px; margin: 0 auto; padding: 0 40px 80px; }
+.blog-category { margin-top: 56px; margin-bottom: 24px; }
+.blog-category-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-weight: 600; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+.article-card { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: start; padding: 28px 0; border-bottom: 1px solid var(--border); cursor: pointer; transition: opacity 0.15s; }
+.article-card:hover { opacity: 0.75; }
+.article-card:last-child { border-bottom: none; }
+.article-tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.article-card h3 { font-family: var(--font-display); font-size: 18px; font-weight: 600; line-height: 1.3; margin-bottom: 8px; }
+.article-card p { font-size: 14px; color: var(--muted); line-height: 1.6; max-width: 520px; }
+.article-arrow { color: var(--muted); font-size: 20px; margin-top: 4px; }
+
+/* ARTICLE PAGE */
+.article-back { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 14px; cursor: pointer; background: none; border: none; font-family: var(--font-body); padding: 0; transition: color 0.2s; margin-bottom: 32px; }
+.article-back:hover { color: var(--text); }
+.article-wrap { max-width: 680px; margin: 0 auto; padding: 120px 40px 80px; }
+.article-meta { margin-bottom: 48px; }
+.article-meta .article-tag { font-size: 12px; margin-bottom: 16px; }
+.article-meta h1 { font-family: var(--font-display); font-size: clamp(28px, 4vw, 44px); font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 0; }
+.article-body { font-size: 16px; line-height: 1.8; color: #C8D0DC; }
+.article-body h2 { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--text); margin: 48px 0 16px; letter-spacing: -0.01em; }
+.article-body h3 { font-family: var(--font-display); font-size: 18px; font-weight: 600; color: var(--text); margin: 36px 0 12px; }
+.article-body p { margin-bottom: 20px; }
+.article-body ul, .article-body ol { margin: 0 0 20px 24px; }
+.article-body li { margin-bottom: 8px; }
+.article-body strong { color: var(--text); font-weight: 600; }
+.article-body code { font-family: 'Courier New', monospace; font-size: 13px; background: var(--surface2); border: 1px solid var(--border); padding: 2px 7px; border-radius: 4px; color: var(--accent2); }
+.article-body pre { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 20px 24px; margin: 24px 0; overflow-x: auto; }
+.article-body pre code { background: none; border: none; padding: 0; color: var(--accent2); font-size: 14px; }
+.article-body hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+.article-body table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 14px; }
+.article-body th { text-align: left; padding: 10px 16px; background: var(--surface); border: 1px solid var(--border); font-family: var(--font-display); font-weight: 600; color: var(--text); }
+.article-body td { padding: 10px 16px; border: 1px solid var(--border); color: var(--muted); }
+.article-cta { margin-top: 56px; padding: 32px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; text-align: center; }
+.article-cta p { color: var(--muted); font-size: 15px; margin-bottom: 20px; }
+
+/* FOOTER */
+footer { padding: 32px 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; border-top: 1px solid var(--border); }
+footer p { font-size: 13px; color: var(--muted); }
+
+/* MOBILE */
+@media (max-width: 680px) {
+  nav { padding: 16px 20px; }
+  .nav-links { gap: 16px; }
+  .hero, section { padding-left: 20px; padding-right: 20px; }
+  .trust { padding: 28px 20px; }
+  .blog-header { padding: 100px 20px 40px; }
+  .blog-grid { padding: 0 20px 60px; }
+  .article-wrap { padding: 100px 20px 60px; }
+  footer { padding: 24px 20px; }
+  .sobre-grid { grid-template-columns: 1fr; }
+  .article-card { grid-template-columns: 1fr; }
+  .article-arrow { display: none; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo" onclick="showPage('home')">BI<span>.</span>Protheus</div>
+  <div class="nav-links">
+    <button class="nav-link" onclick="showPage('home')">Início</button>
+    <button class="nav-link" onclick="showPage('blog')">Blog</button>
+    <a class="nav-cta" href="https://wa.me/5511984993099?text=Olá%2C%20quero%20saber%20mais%20sobre%20BI%20para%20Protheus" target="_blank">WhatsApp</a>
+  </div>
+</nav>
+
+<!-- ═══════════ HOME ═══════════ -->
+<div id="page-home" class="page active">
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">Power BI + TOTVS Protheus</div>
+      <h1>Seus dados do<br>Protheus em<br><em>dashboards que decidem.</em></h1>
+      <p class="hero-sub">Conexão direta entre Power BI e seu ERP Protheus — sem exportar Excel, sem digitar manualmente, sem esperar pelo TI.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="https://wa.me/5511984993099?text=Olá%2C%20quero%20saber%20mais%20sobre%20BI%20para%20Protheus" target="_blank">
+          <svg class="wpp-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Diagnóstico gratuito
+        </a>
+        <button class="btn-ghost" onclick="showPage('blog')">Ver artigos do blog ↓</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="trust">
+    <div class="trust-inner">
+      <span class="trust-label">Experiência em</span>
+      <div class="trust-badges">
+        <span class="badge">Localiza</span><span class="badge">Globo</span>
+        <span class="badge">Carrefour</span><span class="badge">TOTVS Protheus</span><span class="badge">Power BI</span>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-inner">
+      <div class="section-label">O problema</div>
+      <h2>O Protheus tem os dados.<br>Mas onde estão as respostas?</h2>
+      <p class="section-desc">A maioria das empresas que usam Protheus toma decisões com relatórios estáticos, planilhas enviadas por e-mail e reuniões baseadas em dados de ontem.</p>
+      <div class="problem-grid">
+        <div class="problem-card"><div class="problem-icon">📊</div><h3>Relatórios do Protheus que ninguém lê</h3><p>Saídas padrão do ERP são difíceis de interpretar e chegam tarde demais para mudar qualquer coisa.</p></div>
+        <div class="problem-card"><div class="problem-icon">📁</div><h3>Excel no meio do caminho</h3><p>Alguém exporta, alguém formata, alguém consolida — e o número muda a cada versão do arquivo.</p></div>
+        <div class="problem-card"><div class="problem-icon">🔒</div><h3>TI como gargalo</h3><p>Cada pedido de relatório novo vira chamado. A área de negócio espera semanas por uma visão simples.</p></div>
+        <div class="problem-card"><div class="problem-icon">📉</div><h3>Gestão no escuro</h3><p>Sem visão em tempo real de estoque, faturamento, compras e produção, decisões chegam tarde.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="como-funciona" style="border-top:1px solid var(--border)">
+    <div class="section-inner">
+      <div class="section-label">Como funciona</div>
+      <h2>Do banco de dados do Protheus<br>ao painel na sua tela.</h2>
+      <p class="section-desc">Processo direto, sem intermediários e sem necessidade de mudar o ERP.</p>
+      <div class="steps">
+        <div class="step"><div class="step-num">01</div><div><h3>Diagnóstico gratuito</h3><p>Conversa de 30 minutos para entender quais módulos do Protheus você usa, quais decisões quer tomar e onde está o maior ponto de dor hoje.</p></div></div>
+        <div class="step"><div class="step-num">02</div><div><h3>Mapeamento e conexão</h3><p>Identifico as tabelas relevantes do seu banco Protheus (SQL Server ou Progress) e configuro a conexão direta com o Power BI — sem exportações manuais.</p></div></div>
+        <div class="step"><div class="step-num">03</div><div><h3>Construção dos dashboards</h3><p>Painéis com os KPIs que fazem sentido para o seu negócio: faturamento, estoque, compras, produção, margem. Com filtros, drill-down e atualização automática.</p></div></div>
+        <div class="step"><div class="step-num">04</div><div><h3>Entrega e capacitação</h3><p>Entrego os painéis publicados e treino sua equipe para usar e interpretar. Suporte pós-entrega incluso.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats-bg">
+    <div class="section-inner">
+      <div class="stats-grid">
+        <div><div class="stat-num">5<span>+</span></div><div class="stat-label">anos em Analytics e BI em grandes empresas brasileiras</div></div>
+        <div><div class="stat-num">60<span>+</span></div><div class="stat-label">projetos de BI entregues com Power BI, Tableau e Looker</div></div>
+        <div><div class="stat-num">60<span>%</span></div><div class="stat-label">de redução de perdas alcançada via controle de estoque em Protheus</div></div>
+        <div><div class="stat-num">US$40<span>k</span></div><div class="stat-label">economizados em custos anuais com otimização de dados</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-inner">
+      <div class="section-label">Para quem é</div>
+      <h2>Indústria, varejo e logística<br>que usam Protheus.</h2>
+      <p class="section-desc">Foco em empresas de até 500 funcionários que já têm o ERP rodando mas ainda não extraem o real valor dos dados que ele guarda.</p>
+      <div class="audience-grid">
+        <div class="audience-card"><div class="audience-icon">🏭</div><h3>Indústria</h3><p>Controle de produção, lotes, perdas, custo de manufatura e eficiência operacional — tudo visível em tempo real.</p></div>
+        <div class="audience-card"><div class="audience-icon">🛒</div><h3>Varejo</h3><p>Giro de estoque, ruptura, margem por produto e performance de loja em painéis que a liderança realmente usa.</p></div>
+        <div class="audience-card"><div class="audience-icon">🚚</div><h3>Logística</h3><p>Custos de frete, prazo de entrega, ocupação de frota e indicadores de fornecedores sem planilha manual.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-top:1px solid var(--border)">
+    <div class="section-inner">
+      <div class="section-label">Do blog</div>
+      <h2>Conteúdo técnico sobre<br>Protheus e Power BI.</h2>
+      <p class="section-desc">Artigos escritos por quem conhece o banco de dados do Protheus por dentro — não só a teoria do BI.</p>
+      <div class="audience-grid">
+        <div class="audience-card" onclick="showArticle(0)" style="cursor:pointer">
+          <div class="article-tag">Técnico</div>
+          <h3>A armadilha do D_E_L_E_T_ que quebra todo dashboard</h3>
+          <p style="margin-top:8px">O campo que mais causa dado errado em projetos de BI com Protheus — e quase ninguém fala sobre ele.</p>
+        </div>
+        <div class="audience-card" onclick="showArticle(1)" style="cursor:pointer">
+          <div class="article-tag">Case</div>
+          <h3>Como reduzimos 60% das perdas de estoque</h3>
+          <p style="margin-top:8px">Um caso real: o problema, o que foi feito e o que mudou. Com tabelas e abordagem técnica.</p>
+        </div>
+        <div class="audience-card" onclick="showArticle(2)" style="cursor:pointer">
+          <div class="article-tag">Referência</div>
+          <h3>As tabelas do Protheus que todo analista precisa conhecer</h3>
+          <p style="margin-top:8px">SA1, SB1, SD1, SF2 — mapa completo das tabelas essenciais com armadilhas de cada uma.</p>
+        </div>
+      </div>
+      <div style="margin-top:32px;text-align:center">
+        <button class="btn-ghost" onclick="showPage('blog')">Ver todos os artigos →</button>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-top:1px solid var(--border)">
+    <div class="section-inner">
+      <div class="section-label">Quem faz</div>
+      <h2>Especialista em BI<br>para Protheus.</h2>
+      <div class="sobre-grid">
+        <div class="sobre-text">
+          <p>Engenheiro de Produção com MBA em Data Science pela <strong>USP</strong> e mais de 5 anos de experiência em Analytics e BI em empresas como <strong>Localiza, Globo, Carrefour e Smiles</strong>.</p>
+          <p>Anos de trabalho com o <strong>Protheus na prática</strong> — os módulos de estoque, compras, faturamento e produção não só como analista, mas como alguém que precisou extrair valor real dessas tabelas para decisões estratégicas.</p>
+          <p>Não é uma agência. Você fala direto com quem entrega do diagnóstico à entrega.</p>
+        </div>
+        <div class="certs">
+          <div class="cert"><span class="cert-dot"></span>MBA Data Science & Analytics — USP</div>
+          <div class="cert"><span class="cert-dot"></span>Expert Tableau — Tableau (48h)</div>
+          <div class="cert"><span class="cert-dot"></span>Especialista Power BI — DSA (80h)</div>
+          <div class="cert"><span class="cert-dot"></span>Looker & Looker Studio — Google Cloud</div>
+          <div class="cert"><span class="cert-dot"></span>Lean Six Sigma Green Belt — FIPEN</div>
+          <div class="cert"><span class="cert-dot"></span>Engenharia de Produção — USJT</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="section-inner">
+      <div class="section-label">Próximo passo</div>
+      <h2>Diagnóstico gratuito de 30 minutos.</h2>
+      <p>Sem compromisso. Você sai sabendo exatamente o que é possível fazer com os dados que já estão no seu Protheus.</p>
+      <a class="wpp-btn" href="https://wa.me/5511984993099?text=Olá%2C%20quero%20saber%20mais%20sobre%20BI%20para%20Protheus" target="_blank">
+        <svg class="wpp-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Falar no WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 William Rigo — BI para Protheus</p>
+    <p style="font-size:12px">Betim, MG · Brasil</p>
+  </footer>
+</div>
+
+<!-- ═══════════ BLOG LIST ═══════════ -->
+<div id="page-blog" class="page">
+  <div class="blog-header">
+    <div class="section-inner">
+      <div class="section-label">Blog</div>
+      <h2>Protheus + Power BI<br>na prática.</h2>
+    </div>
+  </div>
+
+  <div class="blog-grid">
+    <div class="blog-category">
+      <div class="blog-category-label">Técnico — Para quem está no banco de dados</div>
+    </div>
+
+    <div class="article-card" onclick="showArticle(0)">
+      <div>
+        <div class="article-tag">Técnico</div>
+        <h3>A tabela D_E_L_E_T_ do Protheus e por que ela quebra todo dashboard de quem não conhece</h3>
+        <p>O campo que mais causa dado errado em projetos de BI com Protheus. Quase ninguém fala sobre ele — e quase todo projeto que vai ao ar sem tratar esse campo tem número errado.</p>
+      </div>
+      <div class="article-arrow">→</div>
+    </div>
+
+    <div class="article-card" onclick="showArticle(2)">
+      <div>
+        <div class="article-tag">Referência</div>
+        <h3>As tabelas do Protheus que todo analista de BI precisa conhecer antes de começar</h3>
+        <p>SA1, SB1, SB2, SD1, SD2, SC5, SC6, SF2, SE1 — mapa completo com o que cada tabela guarda, os campos mais usados e as armadilhas de cada uma.</p>
+      </div>
+      <div class="article-arrow">→</div>
+    </div>
+
+    <div class="article-card" onclick="showArticle(3)">
+      <div>
+        <div class="article-tag">Opinião</div>
+        <h3>Por que o DirectQuery no Protheus quase sempre é uma má ideia</h3>
+        <p>O DirectQuery parece a solução ideal para dados em tempo real. Na prática com o Protheus, costuma criar mais problema do que resolver. Veja por quê e o que usar no lugar.</p>
+      </div>
+      <div class="article-arrow">→</div>
+    </div>
+
+    <div class="article-card" onclick="showArticle(6)">
+      <div>
+        <div class="article-tag">Tutorial</div>
+        <h3>Como conectar o Power BI diretamente ao banco de dados do Protheus</h3>
+        <p>Passo a passo completo: identificar o banco, configurar a conexão, escolher entre Import e DirectQuery, selecionar as tabelas certas e boas práticas de performance.</p>
+      </div>
+      <div class="article-arrow">→</div>
+    </div>
+
+    <div class="blog-category" style="margin-top:48px">
+      <div class="blog-category-label">Cases e gestão — Para quem decide</div>
+    </div>
+
+    <div class="article-card" onclick="showArticle(1)">
+      <div>
+        <div class="article-tag">Case</div>
+        <h3>Como reduzimos 60% das perdas de estoque numa indústria usando Protheus + Power BI</h3>
+        <p>Não é teoria. É o que o problema era, o que foi construído — tabelas, painéis, alertas — e o que mudou em seis meses de operação.</p>
+      </div>
+      <div class="article-arrow">→</div>
+    </div>
+
+    <div class="article-card" onclick="showArticle(4)">
+      <div>
+        <div class="article-tag">Gestão</div>
+        <h3>Os 10 KPIs de estoque que toda indústria deveria monitorar no Protheus</h3>
+        <p>Giro, cobertura, fill rate, curva ABC, shrinkage — os indicadores que já estão no seu banco de dados e que a maioria das empresas não acompanha de forma contínua.</p>
+      </div>
+      <div class="article-arrow">→</div>
+    </div>
+
+    <div class="article-card" onclick="showArticle(5)">
+      <div>
+        <div class="article-tag">Gestão</div>
+        <h3>Por que os relatórios padrão do Protheus não são suficientes para a gestão</h3>
+        <p>O Protheus foi feito para operação, não para análise. Entender essa diferença é o primeiro passo para parar de tomar decisão com dado de ontem.</p>
+      </div>
+      <div class="article-arrow">→</div>
+    </div>
+
+    <div class="article-card" onclick="showArticle(7)">
+      <div>
+        <div class="article-tag">ROI</div>
+        <h3>Quanto custa não ter BI no seu Protheus? Um cálculo real</h3>
+        <p>Horas desperdiçadas, decisões erradas, capital parado, oportunidades perdidas. O custo invisível de não ter BI é maior do que parece — e dá para calcular.</p>
+      </div>
+      <div class="article-arrow">→</div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 William Rigo — BI para Protheus</p>
+    <p style="font-size:12px">Betim, MG · Brasil</p>
+  </footer>
+</div>
+
+<!-- ═══════════ ARTICLE ═══════════ -->
+<div id="page-article" class="page">
+  <div class="article-wrap">
+    <button class="article-back" onclick="goBackFromArticle()">← Voltar ao blog</button>
+    <div class="article-meta">
+      <div id="art-tag" class="article-tag"></div>
+      <h1 id="art-title"></h1>
+    </div>
+    <div id="art-body" class="article-body"></div>
+    <div class="article-cta">
+      <p>Tem Protheus rodando e quer extrair mais valor dos seus dados?</p>
+      <a class="wpp-btn" href="https://wa.me/5511984993099?text=Olá%2C%20quero%20saber%20mais%20sobre%20BI%20para%20Protheus" target="_blank" style="display:inline-flex">
+        <svg class="wpp-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Diagnóstico gratuito — 30 min
+      </a>
+    </div>
+  </div>
+  <footer>
+    <p>© 2026 William Rigo — BI para Protheus</p>
+    <p style="font-size:12px">Betim, MG · Brasil</p>
+  </footer>
+</div>
+
+<script>
+let previousPage = 'blog';
+
+const articles = [
+  {
+    tag: 'Técnico',
+    title: 'A tabela D_E_L_E_T_ do Protheus e por que ela quebra todo dashboard de quem não conhece',
+    body: `<p>Se você está conectando o Power BI ao banco do Protheus pela primeira vez e os números não batem com o que o ERP mostra — há uma boa chance de que a culpa seja desse campo.</p>
+<p>O <code>D_E_L_E_T_</code> é provavelmente a maior fonte de dado errado em projetos de BI com Protheus. E quase ninguém fala sobre ele.</p>
+<hr>
+<h2>O que é o D_E_L_E_T_</h2>
+<p>O Protheus não deleta registros do banco de dados. Nunca.</p>
+<p>Quando você exclui um produto, um pedido, um cliente ou qualquer outro registro dentro do ERP, o sistema não remove a linha da tabela. Ele simplesmente marca aquela linha com um asterisco (<code>*</code>) no campo <code>D_E_L_E_T_</code>.</p>
+<p>O ERP sabe ignorar esse campo nas consultas internas. O Power BI não sabe — a menos que você diga pra ele.</p>
+<hr>
+<h2>O que acontece na prática</h2>
+<p>Você conecta o Power BI na tabela <code>SB1</code> (produtos) e puxa uma contagem de itens cadastrados. O número vem 3.847.</p>
+<p>Você vai no Protheus, faz a mesma consulta. Aparecem 2.190 produtos.</p>
+<p>Diferença de 1.657 registros. Todos são produtos que foram excluídos ao longo dos anos — mas que continuam existindo no banco, invisíveis pro ERP e muito visíveis pro seu dashboard.</p>
+<p>Agora imagina esse problema num relatório de faturamento, de estoque ou de margem. Os números parecem certos mas estão errados. E pior: parecem plausíveis o suficiente pra ninguém questionar.</p>
+<hr>
+<h2>As tabelas onde isso aparece com mais frequência</h2>
+<p>Praticamente todas as tabelas do Protheus têm o campo <code>D_E_L_E_T_</code>. As que mais causam problema em projetos de BI:</p>
+<ul>
+<li><strong>SB1</strong> — Cadastro de produtos</li>
+<li><strong>SA1</strong> — Cadastro de clientes</li>
+<li><strong>SA2</strong> — Cadastro de fornecedores</li>
+<li><strong>SC5/SC6</strong> — Pedidos de venda e itens</li>
+<li><strong>SD1/SD2</strong> — Movimentações de estoque</li>
+<li><strong>SF2</strong> — Notas fiscais</li>
+</ul>
+<p>Em tabelas de movimentação como SD1 e SD2, registros deletados podem distorcer completamente o cálculo de giro de estoque e custo médio.</p>
+<hr>
+<h2>Como filtrar corretamente</h2>
+<p>A correção é simples — desde que você saiba que o problema existe.</p>
+<p>Em qualquer consulta ou view que você criar no banco do Protheus para alimentar o Power BI, adicione sempre esse filtro:</p>
+<pre><code>WHERE D_E_L_E_T_ &lt;&gt; '*'</code></pre>
+<p>No Power Query, se você já carregou a tabela sem esse filtro, pode adicionar uma etapa de filtragem: selecione a coluna <code>D_E_L_E_T_</code> e filtre para mostrar apenas os registros onde o valor <strong>não é igual a</strong> <code>*</code>.</p>
+<p>Parece pequeno. Faz uma diferença enorme.</p>
+<hr>
+<h2>Outras armadilhas parecidas que vêm junto</h2>
+<p><strong><code>MSBLQL</code></strong> — Flag de bloqueio. Registros bloqueados ainda aparecem na tabela mas não deveriam entrar em boa parte das análises. Dependendo do contexto, você vai querer filtrar <code>MSBLQL &lt;&gt; '1'</code>.</p>
+<p><strong>Filial (<code>XX_FILIAL</code>)</strong> — O Protheus é multifilial por padrão. Se a empresa tem mais de uma filial e você não filtra ou agrupa corretamente por filial, seus totais vão duplicar ou misturar dados de operações diferentes.</p>
+<hr>
+<h2>Por que isso importa além do número errado</h2>
+<p>Um dashboard com dado errado que parece certo é mais perigoso do que não ter dashboard nenhum.</p>
+<p>Se o gestor desconfia do número, ele não usa. Se ele confia num número errado, ele decide errado — e não sabe por quê as coisas não saem como esperado.</p>
+<p>Parte do trabalho de quem constrói BI em Protheus é exatamente esse: conhecer as peculiaridades do banco antes de ligar o Power BI e começar a arrastar campos. Não é só técnica de BI — é conhecimento específico de como o Protheus funciona por dentro.</p>`
+  },
+  {
+    tag: 'Case',
+    title: 'Como reduzimos 60% das perdas de estoque numa indústria usando Protheus + Power BI',
+    body: `<p>Esse artigo é diferente dos outros. Não é teoria, não é passo a passo genérico. É um caso real — o que o problema era, o que foi feito e o que mudou.</p>
+<p>Os números são reais. O processo também.</p>
+<hr>
+<h2>O contexto</h2>
+<p>A empresa era uma indústria de médio porte, com operação complexa: múltiplos tipos de produto, lotes com validade, vários pontos de movimentação de estoque e um histórico de perdas que ninguém conseguia explicar direito.</p>
+<p>O Protheus estava implantado e rodando. Os módulos de estoque (SIGAEST) e produção (SIGAPCP) eram usados no dia a dia. Mas a gestão de perdas era praticamente cega — os números apareciam no inventário físico, quando o estrago já estava feito.</p>
+<p>A pergunta que ninguém conseguia responder com precisão: <strong>onde exatamente o estoque estava sumindo e por quê?</strong></p>
+<hr>
+<h2>O problema real</h2>
+<p>Quando fui mapear o banco de dados do Protheus, encontrei o seguinte cenário:</p>
+<ul>
+<li>Movimentações sendo lançadas com tipo de movimento errado — o produto saía do sistema como "transferência" quando na prática era perda por avaria</li>
+<li>Lotes vencidos ainda aparecendo no saldo disponível porque o bloqueio não estava sendo feito sistematicamente</li>
+<li>Diferenças entre estoque contábil e físico sendo descobertas só no inventário semestral</li>
+<li>Nenhum indicador rodando entre um inventário e outro</li>
+</ul>
+<p>O Protheus tinha o dado de tudo isso. O problema era que ninguém estava olhando pra esse dado de forma contínua.</p>
+<hr>
+<h2>O que foi construído</h2>
+<p><strong>1. Painel de rastreamento de lotes</strong><br>Usando as tabelas de movimentação (SD1/SD2) com filtro correto de <code>D_E_L_E_T_</code> e cruzamento com a tabela de lotes (SB8), criamos uma visão de todos os lotes ativos com data de validade, quantidade disponível e localização no estoque. Um alerta automático sinalizava lotes com menos de 30 dias para o vencimento.</p>
+<p><strong>2. Monitoramento de tipos de movimento</strong><br>SD1 e SD2 registram cada movimentação com um tipo de movimento. Criamos um painel que consolidava todas as movimentações por tipo, semana a semana. Foi aí que apareceu o primeiro insight: um volume desproporcional de movimentações classificadas como "ajuste de estoque" — que na prática estava mascarando perdas reais.</p>
+<p><strong>3. Comparativo saldo × físico contínuo</strong><br>Com base nas movimentações registradas no Protheus, criamos uma projeção de saldo teórico por produto e cruzamos com as contagens parciais que o almoxarife já fazia informalmente. O que antes virava diferença só no inventário semestral passou a aparecer semanalmente.</p>
+<hr>
+<h2>O que mudou</h2>
+<p>Em seis meses de operação com os dashboards rodando:</p>
+<ul>
+<li><strong>60% de redução nas perdas de estoque</strong> — medido pela diferença entre inventários consecutivos</li>
+<li>Eliminação dos lotes vencidos em estoque disponível</li>
+<li>Identificação e correção dos tipos de movimento errados</li>
+<li>A gestão passou a ter uma reunião semanal de 30 minutos com os painéis — antes, o assunto só entrava em pauta quando havia problema</li>
+</ul>
+<hr>
+<h2>O que esse caso ensina</h2>
+<p><strong>O dado já estava lá.</strong> O Protheus registrava tudo. O problema não era falta de informação — era falta de visibilidade sobre a informação que já existia.</p>
+<p><strong>Conhecer o ERP é tão importante quanto conhecer o BI.</strong> Saber que SD1 e SD2 são as tabelas de movimentação, que <code>D_E_L_E_T_</code> precisa ser filtrado, que o tipo de movimento é a chave pra entender o que aconteceu — isso não é conhecimento de Power BI. É conhecimento de Protheus.</p>
+<p><strong>O resultado veio de visibilidade, não de complexidade.</strong> Não foi uma solução sofisticada. Foi colocar na tela, de forma clara e contínua, informações que já existiam no banco mas que ninguém estava vendo.</p>`
+  },
+  {
+    tag: 'Referência',
+    title: 'As tabelas do Protheus que todo analista de BI precisa conhecer antes de começar',
+    body: `<p>Quando você abre o banco de dados do Protheus pela primeira vez, encontra centenas de tabelas com nomes como <code>SA1</code>, <code>SB1</code>, <code>SD2</code>, <code>SF2</code>. Nenhum nome intuitivo. Nenhuma documentação óbvia.</p>
+<p>Não precisa ser assim. Existe um conjunto de tabelas que cobre a grande maioria dos projetos de BI em Protheus.</p>
+<hr>
+<h2>A lógica de nomenclatura</h2>
+<ul>
+<li><strong>SA</strong> — Clientes/Fornecedores</li>
+<li><strong>SB</strong> — Estoque (Produtos e Saldos)</li>
+<li><strong>SC</strong> — Pedidos</li>
+<li><strong>SD</strong> — Movimentações</li>
+<li><strong>SF</strong> — Fiscal (Notas Fiscais)</li>
+<li><strong>SE</strong> — Financeiro</li>
+<li><strong>SG</strong> — Estrutura de Produto (Produção)</li>
+</ul>
+<p>Quando você vê <code>SC6</code>, já sabe que tem a ver com pedidos. Quando vê <code>SE1</code>, é financeiro.</p>
+<hr>
+<h2>SA1 — Clientes</h2>
+<p>Cadastro completo: razão social, CNPJ, cidade, estado, segmento, condição de pagamento, limite de crédito.</p>
+<p><strong>Campos mais usados:</strong> <code>A1_COD</code>, <code>A1_NOME</code>, <code>A1_EST</code>, <code>A1_TIPO</code> (F=físico, J=jurídico)</p>
+<p><strong>Armadilha:</strong> clientes excluídos continuam na tabela. Sempre filtrar <code>D_E_L_E_T_ &lt;&gt; '*'</code>.</p>
+<hr>
+<h2>SA2 — Fornecedores</h2>
+<p>Estrutura espelhada do SA1, mas para fornecedores.</p>
+<p><strong>Armadilha:</strong> o Protheus identifica fornecedores por código + loja (<code>A2_LOJA</code>). Um mesmo CNPJ pode ter múltiplos registros com lojas diferentes — duplica fornecedores em análises de concentração.</p>
+<hr>
+<h2>SB1 — Cadastro de Produtos</h2>
+<p><strong>Campos mais usados:</strong> <code>B1_COD</code>, <code>B1_DESC</code>, <code>B1_GRUPO</code> (chave pra Curva ABC), <code>B1_TIPO</code> (PA=produto acabado, MP=matéria-prima), <code>B1_UM</code></p>
+<hr>
+<h2>SB2 — Saldos de Estoque</h2>
+<p>Guarda o <strong>saldo atual</strong> de cada produto por armazém — não histórico, posição atual.</p>
+<p><strong>Campos essenciais:</strong> <code>B2_COD</code>, <code>B2_LOCAL</code> (armazém), <code>B2_QATU</code> (quantidade), <code>B2_CM1</code> (custo médio)</p>
+<p><strong>Fórmula básica:</strong> <code>B2_QATU * B2_CM1</code> = valor do estoque por produto.</p>
+<hr>
+<h2>SD1 e SD2 — Movimentações de Estoque</h2>
+<ul>
+<li><strong>SD1</strong> — entradas (notas de entrada, devoluções de cliente, produções)</li>
+<li><strong>SD2</strong> — saídas (notas de saída, devoluções a fornecedor, consumo na produção)</li>
+</ul>
+<p><strong>Campo mais importante:</strong> <code>D1_TM</code> / <code>D2_TM</code> — tipo de movimento. Define o que a movimentação representa: venda, devolução, transferência, perda, ajuste.</p>
+<p><strong>Armadilha crítica:</strong> movimentações deletadas continuam na tabela com <code>D_E_L_E_T_ = '*'</code>. Não filtrar distorce completamente giro e custo.</p>
+<hr>
+<h2>SC5 e SC6 — Pedidos de Venda</h2>
+<ul>
+<li><strong>SC5</strong> — cabeçalho (cliente, data, condição de pagamento, vendedor)</li>
+<li><strong>SC6</strong> — itens (produto, quantidade, preço, desconto)</li>
+</ul>
+<p>Relação: <code>SC5.C5_NUM = SC6.C6_NUM</code></p>
+<p><strong>Campo importante:</strong> <code>C6_STATUS</code> — aberto, atendido ou cancelado. Essencial pra não inflar o faturamento previsto com itens cancelados.</p>
+<hr>
+<h2>SF2 — Notas Fiscais</h2>
+<p>Cabeçalho da nota fiscal: cliente, data de emissão, valor total, CFOP.</p>
+<p><strong>Atenção:</strong> <code>F2_TIPO</code> (<code>E</code>=entrada, <code>S</code>=saída) é fundamental pra não misturar compra com venda.</p>
+<hr>
+<h2>SE1 e SE2 — Financeiro</h2>
+<ul>
+<li><strong>SE1</strong> — títulos a receber</li>
+<li><strong>SE2</strong> — títulos a pagar</li>
+</ul>
+<p><strong>Campos essenciais no SE1:</strong> <code>E1_VENCTO</code>, <code>E1_VALOR</code>, <code>E1_SALDO</code>, <code>E1_TIPO</code></p>
+<hr>
+<h2>Como essas tabelas se relacionam</h2>
+<p>Modelo básico para um dashboard de vendas completo:</p>
+<pre><code>SA1 (clientes)
+  └── SC5 (pedido cabeçalho)
+        └── SC6 (pedido itens)
+              └── SB1 (produtos)
+  └── SF2 (nota fiscal)
+        └── SD2 (itens da nota)
+  └── SE1 (títulos a receber)</code></pre>
+<p>Com esse modelo no Power BI, você vai do pedido ao faturamento ao recebimento — cruzando com clientes e produtos. É a base de 80% dos dashboards comerciais.</p>`
+  },
+  {
+    tag: 'Opinião',
+    title: 'Por que o DirectQuery no Protheus quase sempre é uma má ideia',
+    body: `<p>Essa é uma opinião. E provavelmente vai contrariar o que você leu em outros artigos sobre Power BI e Protheus.</p>
+<p>O DirectQuery é apresentado como a solução ideal para quem quer dados em tempo real. Na prática com o Protheus, é uma escolha que costuma criar mais problema do que resolver.</p>
+<hr>
+<h2>Como o DirectQuery funciona</h2>
+<p>No modo <strong>Import</strong>, o Power BI copia os dados do banco para dentro do modelo. As consultas DAX rodam sobre esses dados locais — rápido, independente do banco, sem gerar carga no servidor do ERP.</p>
+<p>No <strong>DirectQuery</strong>, não há cópia. Cada interação no dashboard — um clique num filtro, uma mudança de período, um drill-down — dispara uma consulta SQL direto no banco do Protheus em tempo real.</p>
+<p>O resultado: dados sempre frescos. O custo: toda a carga de processamento vai pro banco.</p>
+<hr>
+<h2>O problema específico com o Protheus</h2>
+<p>O banco de dados do Protheus não foi desenhado pra suportar consultas analíticas pesadas em paralelo com a operação do ERP.</p>
+<p>Durante o horário comercial, o banco está ocupado processando o que o ERP faz de melhor: registrar movimentações, emitir notas, atualizar saldos. Quando você coloca o DirectQuery em cima disso, cada usuário que abre o dashboard gera consultas adicionais no mesmo banco.</p>
+<p>O resultado prático que já vi acontecer:</p>
+<ul>
+<li>Dashboard lento demais pra ser útil (30, 40 segundos pra carregar um visual)</li>
+<li>Lentidão no próprio ERP durante horário de pico</li>
+<li>Em casos extremos, timeout nas consultas do Protheus por sobrecarga no banco</li>
+</ul>
+<hr>
+<h2>"Mas eu preciso de dados em tempo real"</h2>
+<p>Essa é a justificativa mais comum. Vale questionar se você realmente precisa.</p>
+<p>Pensa nos dashboards que a gestão usa no dia a dia: faturamento do mês, giro de estoque, inadimplência, desempenho de vendas. Esses indicadores mudam relevantemente a cada hora? A cada 15 minutos?</p>
+<p>Na maioria dos casos, dados atualizados a cada 1 hora atendem perfeitamente a necessidade de gestão. A sensação de "preciso de tempo real" frequentemente é uma suposição, não uma necessidade real do processo.</p>
+<hr>
+<h2>O que usar no lugar</h2>
+<p><strong>Import com atualização agendada</strong> é a escolha certa pra 90% dos projetos de BI em Protheus. Você configura a atualização de hora em hora, fora do horário de pico se necessário. O Power BI importa os dados, o banco fica livre e o dashboard responde em milissegundos.</p>
+<hr>
+<h2>Quando o DirectQuery faz sentido</h2>
+<p><strong>Volume muito grande pro Import:</strong> décadas de histórico com bilhões de linhas de movimentação. Nesse caso, DirectQuery com views otimizadas pode ser necessário.</p>
+<p><strong>Data Warehouse intermediário:</strong> se em vez de consultar o banco do Protheus diretamente você está consultando um DW separado — otimizado pra leitura — o DirectQuery funciona muito melhor. Mas aí o problema já foi resolvido pela arquitetura.</p>
+<hr>
+<h2>A alternativa que resolve o melhor dos dois mundos</h2>
+<ol>
+<li><strong>Views otimizadas no banco do Protheus</strong> — pré-calculam os agregados e filtram registros desnecessários (incluindo o <code>D_E_L_E_T_</code>)</li>
+<li><strong>Job de carga</strong> que roda de hora em hora, copia os dados das views para um banco separado</li>
+<li><strong>Power BI em Import</strong> consultando esse banco separado</li>
+</ol>
+<p>O ERP não sente nada. O dashboard atualiza de hora em hora. E você tem um ambiente analítico que pode crescer sem comprometer a operação.</p>
+<p>DirectQuery no Protheus: evite se puder. Import com atualização agendada resolve 90% dos projetos com muito menos risco.</p>`
+  },
+  {
+    tag: 'Gestão',
+    title: 'Os 10 KPIs de estoque que toda indústria deveria monitorar no Protheus',
+    body: `<p>Ter o Protheus rodando e não monitorar os KPIs certos é como ter um painel de avião cheio de instrumentos e olhar só pela janela.</p>
+<p>O módulo SIGAEST guarda tudo que você precisa. O problema é que os relatórios nativos não entregam isso de forma clara. Com o Power BI conectado, você acompanha esses indicadores em tempo real — e para de descobrir o problema quando já é tarde.</p>
+<hr>
+<h2>1. Giro de Estoque</h2>
+<p>Quantas vezes o estoque foi renovado no período. Giro baixo = produto encalhado, capital parado. Giro alto demais = risco de ruptura. É o KPI mais básico e um dos mais ignorados.</p>
+<h2>2. Cobertura de Estoque (Days Forward Coverage)</h2>
+<p>Por quantos dias o estoque atual aguenta atender a demanda média. Se a cobertura está em 45 dias e o lead time do fornecedor é 30 dias, você está no limite. Esse número guia o planejamento de compras melhor do que qualquer feeling.</p>
+<h2>3. Estoque Médio</h2>
+<p>O volume médio armazenado no período. Serve para dimensionar custo de armazenagem e avaliar se o nível de investimento em estoque está proporcionalmente saudável ao faturamento.</p>
+<h2>4. Estoque de Segurança (Estoque Mínimo)</h2>
+<p>A quantidade extra mantida pra não parar quando o fornecedor atrasar. O Protheus tem rotinas para calcular esse valor usando lead time e demanda média diária. O problema é que muita empresa define "no olho" e não revisa.</p>
+<h2>5. Taxa de Ruptura (Fill Rate)</h2>
+<p>Porcentagem dos pedidos atendidos completamente, sem falta de produto. Fill Rate abaixo de 95% em indústria merece investigação imediata. O SIGAEST tem os dados pra calcular — quase ninguém acompanha de forma contínua.</p>
+<h2>6. Curva ABC</h2>
+<p>Classificação por importância: Classe A = 20% dos itens, 80% do valor. Os itens A merecem controle rigoroso. Os itens C podem ter política mais relaxada. Misturar os dois é desperdiçar energia onde não importa.</p>
+<h2>7. Excesso de Estoque</h2>
+<p>Quantidade acima do necessário pra atender a demanda prevista. R$ 500 mil parados em estoque que não vai girar em 6 meses têm custo financeiro real — próximo de 1,5% ao mês, ou R$ 7.500 dormindo na prateleira todo mês.</p>
+<h2>8. Contração de Estoque (Shrinkage)</h2>
+<p>A diferença entre o que o Protheus diz que tem e o que o inventário físico encontrou. Pode ser furto, avaria, erro de lançamento. O que não pode é essa diferença ser descoberta só no inventário anual.</p>
+<h2>9. Lote Econômico de Compra</h2>
+<p>A quantidade ideal pra comprar em cada pedido, equilibrando custo do pedido versus custo de manter estoque. O Protheus tem rotinas para esse cálculo — que quase nunca entra num painel gerencial.</p>
+<h2>10. Nível de Serviço (Nível de Atendimento)</h2>
+<p>O produto certo, na quantidade certa, na hora certa. É o KPI que conecta tudo. Você pode ter giro ótimo e cobertura equilibrada — mas se o nível de serviço está baixo, alguma coisa no processo está quebrando.</p>
+<hr>
+<h2>Como monitorar tudo isso sem virar escravo de planilha</h2>
+<p>Os dados de todos esses KPIs já estão no seu banco Protheus — nas tabelas do SIGAEST, SIGAFAT e SIGACOM. O trabalho é mapear as tabelas certas, criar as medidas no Power BI e montar um painel que a gestão abre com um clique.</p>
+<p>Feito isso, você para de descobrir o problema depois que ele virou crise.</p>`
+  },
+  {
+    tag: 'Gestão',
+    title: 'Por que os relatórios padrão do Protheus não são suficientes para a gestão',
+    body: `<p>O Protheus é excelente no que foi feito pra fazer: registrar operações, emitir notas, controlar estoque, processar folha. É um dos ERPs mais completos do mercado brasileiro.</p>
+<p>Mas existe uma confusão comum: achar que um ERP completo significa uma ferramenta de gestão completa. Não é a mesma coisa.</p>
+<hr>
+<h2>O Protheus foi feito pra operação, não pra análise</h2>
+<p>Os relatórios nativos do Protheus foram desenhados para responder perguntas operacionais: "Qual o saldo atual desse produto?", "Quais notas foram emitidas hoje?"</p>
+<p>Perguntas de gestão são diferentes: "Quais produtos estão com giro abaixo do esperado?", "Qual cliente está puxando mais margem?", "O custo de armazenagem está crescendo proporcionalmente ao faturamento?"</p>
+<p>Os relatórios padrão não respondem essas perguntas. E forçar o Protheus a responder vira um exercício de frustração.</p>
+<hr>
+<h2>O Excel virou o BI da empresa — e isso tem custo</h2>
+<p>Na ausência de uma ferramenta analítica, alguém exporta o relatório do Protheus, abre no Excel, formata, cruza com outra planilha de outro módulo, manda por e-mail. A reunião acontece com dados de três dias atrás.</p>
+<p>Esse processo tem custo real — de tempo, de retrabalho e de erro. Uma fórmula errada que ninguém percebeu. Uma versão desatualizada que alguém imprimiu. Uma decisão tomada com número errado.</p>
+<p>Não é exagero. É o que acontece toda semana em boa parte das empresas que usam Protheus.</p>
+<hr>
+<h2>Cruzar módulos é quase impossível nativamente</h2>
+<p>Você quer correlacionar giro de estoque (SIGAEST) com margem por cliente (SIGAFAT) e ainda ver o impacto no fluxo de caixa (SIGAFIN)? No Protheus nativo, isso exige programação em AdvPL ou uma consultoria cara de customização.</p>
+<p>No Power BI conectado direto ao banco, é uma questão de modelagem de dados — algo que leva horas, não meses.</p>
+<hr>
+<h2>O que o BI resolve que o Protheus não resolve</h2>
+<ul>
+<li><strong>Visão consolidada entre módulos:</strong> estoque + vendas + financeiro numa tela só</li>
+<li><strong>Dashboards interativos:</strong> o gestor filtra por produto, período, filial — sem pedir pro TI</li>
+<li><strong>Alertas automáticos:</strong> estoque abaixo do mínimo, margem caindo, inadimplência subindo</li>
+<li><strong>Histórico e tendência:</strong> não só "onde estou", mas "pra onde estou indo"</li>
+<li><strong>Atualização automática:</strong> os dados se renovam sem ninguém exportar nada</li>
+</ul>
+<p>Nada disso substitui o Protheus. O ERP continua sendo o coração operacional. O BI é o sistema nervoso que transforma o que o coração processa em inteligência pra quem decide.</p>
+<hr>
+<h2>Vale a pena customizar o Protheus ao invés de usar BI?</h2>
+<p>A resposta honesta: customização no Protheus é cara, demorada e frágil — qualquer atualização do ERP pode quebrar o que foi customizado.</p>
+<p>Conectar o Power BI ao banco é mais rápido, mais barato, mais flexível e não interfere em nada no funcionamento do ERP. São ferramentas complementares, não concorrentes.</p>`
+  },
+  {
+    tag: 'Tutorial',
+    title: 'Como conectar o Power BI diretamente ao banco de dados do Protheus',
+    body: `<p>Se você usa Protheus e ainda exporta Excel para fazer relatório, esse artigo é pra você.</p>
+<p>A conexão direta entre Power BI e o banco do Protheus é mais simples do que parece — e muda completamente a forma como a empresa toma decisões. Sem exportação manual, sem planilha desatualizada.</p>
+<hr>
+<h2>Por que não usar só os relatórios nativos do Protheus?</h2>
+<p>O Protheus guarda uma riqueza enorme de dados. O problema é que as ferramentas de visualização nativas foram feitas para operação, não para gestão. Quer cruzar faturamento com margem por produto? Comparar giro de estoque com prazo de compra? O Protheus não entrega isso de forma simples.</p>
+<hr>
+<h2>O que você precisa antes de começar</h2>
+<ul>
+<li>Acesso ao banco de dados com permissão de leitura</li>
+<li>Dados de conexão: endereço do servidor, nome do banco, usuário e senha</li>
+<li>Saber qual banco o Protheus usa: SQL Server, Oracle ou PostgreSQL</li>
+<li>Power BI Desktop instalado (gratuito no site da Microsoft)</li>
+</ul>
+<hr>
+<h2>Conectando na prática</h2>
+<h3>1. Descubra o banco</h3>
+<p>SQL Server é o mais comum no Protheus. Se for esse o caso, a conexão com Power BI é nativa e estável.</p>
+<h3>2. Abra o Power BI e clique em "Obter Dados"</h3>
+<p>Escolha o conector do seu banco: SQL Server, Oracle Database ou PostgreSQL.</p>
+<h3>3. Preencha os dados de conexão</h3>
+<p>O Power BI vai pedir servidor, banco de dados e modo: Import ou DirectQuery.</p>
+<p><strong>Import</strong> carrega os dados para dentro do Power BI — mais rápido nos relatórios, dados com frequência de atualização configurável. <strong>DirectQuery</strong> consulta o banco em tempo real — dados frescos, mas pode pesar no ERP. Para a maioria dos casos com Protheus, Import é a escolha certa.</p>
+<h3>4. Usuário e senha</h3>
+<p>Use um usuário com permissão <strong>somente leitura</strong> no banco. Se o Power BI estiver na nuvem e o banco for local, você vai precisar do Gateway do Power BI instalado na rede da empresa.</p>
+<h3>5. Escolha as tabelas</h3>
+<p>As principais do Protheus que você vai querer:</p>
+<ul>
+<li><strong>SIGAFAT</strong> — faturamento</li>
+<li><strong>SIGAEST</strong> — estoque</li>
+<li><strong>SIGAFIN</strong> — financeiro</li>
+<li><strong>SIGACOM</strong> — compras</li>
+<li><strong>SIGAPCP</strong> — produção</li>
+</ul>
+<h3>6. Transforme antes de carregar</h3>
+<p>Antes de carregar, abra o Power Query e:</p>
+<ul>
+<li>Renomeie colunas (<code>C5_CLIENTE</code> vira "Cliente")</li>
+<li>Filtre registros com <code>D_E_L_E_T_ &lt;&gt; '*'</code> — obrigatório em todas as tabelas</li>
+<li>Remova registros deletados que o Protheus mantém com a flag <code>D_E_L_E_T_</code></li>
+</ul>
+<h3>7. Crie o dashboard</h3>
+<p>Com os dados carregados e modelados, crie as visualizações, medidas DAX e filtros. Você tem controle total do que mostrar e como mostrar.</p>
+<hr>
+<h2>Cuidados que fazem diferença</h2>
+<p><strong>Performance:</strong> consultas pesadas direto no banco em horário de pico podem afetar quem está usando o Protheus. A solução mais elegante é criar views no banco otimizadas para leitura, e o Power BI consulta essas views.</p>
+<p><strong>Segurança:</strong> permissão de leitura, credenciais armazenadas de forma segura no Power BI, conexão pela rede interna ou VPN.</p>
+<p><strong>Conhecimento da estrutura:</strong> o banco do Protheus tem nomes crípticos, campos abreviados, registros deletados presentes. Quem nunca trabalhou com isso leva tempo para mapear.</p>`
+  },
+  {
+    tag: 'ROI',
+    title: 'Quanto custa não ter BI no seu Protheus? Um cálculo real',
+    body: `<p>A maioria das empresas enxerga o BI como custo. "É mais uma ferramenta, mais uma assinatura, mais um projeto de TI."</p>
+<p>Faz sentido pensar assim — até você calcular quanto custa não ter.</p>
+<p>O custo de não ter BI não aparece numa linha do orçamento. Ele se esconde em horas perdidas, decisões erradas e oportunidades que passaram sem que ninguém percebesse.</p>
+<hr>
+<h2>1. Horas de trabalho desperdiçadas</h2>
+<p>Pensa numa equipe de 5 analistas que gastam em média 10 horas por semana extraindo dados do Protheus, tratando no Excel e montando relatórios gerenciais.</p>
+<p>São 50 horas por semana. 200 horas por mês.</p>
+<p>Com um custo médio de R$ 50/hora, isso é <strong>R$ 10.000 por mês</strong> — R$ 120.000 por ano — gasto exclusivamente em montar relatório manual. E esse trabalho não gera valor. Ele só entrega uma informação que já poderia estar disponível automaticamente.</p>
+<hr>
+<h2>2. Decisões tomadas com dados errados ou velhos</h2>
+<p>Um cenário comum: o responsável de compras puxa o relatório de estoque na segunda-feira. Na quarta, faz o pedido. Na sexta, o almoxarife descobre que o saldo real era diferente por uma movimentação não lançada a tempo.</p>
+<p>Só o custo financeiro de R$ 100 mil imobilizados em estoque desnecessário, a 1,5% ao mês, é <strong>R$ 1.500 por mês jogado fora</strong>. Do outro lado, uma parada de linha por falta de componente pode custar de R$ 5.000 a R$ 50.000 <strong>por hora</strong>.</p>
+<hr>
+<h2>3. Oportunidades que a empresa não enxerga</h2>
+<p>Sem visibilidade sobre curva ABC, giro por produto e margem por cliente, a empresa foca energia onde não tem retorno. Estimativas do setor apontam que indústrias sem BI adequado perdem entre 5% e 10% da receita potencial.</p>
+<p>Numa empresa com R$ 5 milhões de faturamento anual, são de R$ 250 mil a R$ 500 mil que ficam na mesa.</p>
+<hr>
+<h2>4. Retrabalho e ajustes que nunca acabam</h2>
+<p>Conferências de estoque emergenciais. Ajustes de inventário fora do ciclo. Correções de lançamento. Horas extras da controladoria pra fechar os números. Em empresas de médio porte, esse retrabalho recorrente passa fácil de <strong>R$ 30.000 por ano</strong>.</p>
+<hr>
+<h2>O número final</h2>
+<table>
+<tr><th>Item</th><th>Custo estimado/ano</th></tr>
+<tr><td>Tempo perdido em relatórios manuais</td><td>R$ 120.000</td></tr>
+<tr><td>Capital parado e rupturas</td><td>R$ 50.000 – R$ 200.000</td></tr>
+<tr><td>Oportunidades não capturadas</td><td>R$ 250.000 – R$ 500.000</td></tr>
+<tr><td>Retrabalho e ajustes</td><td>R$ 30.000</td></tr>
+<tr><td><strong>Total estimado</strong></td><td><strong>R$ 450.000 – R$ 850.000</strong></td></tr>
+</table>
+<p style="margin-top:20px">E o custo de implementar um BI conectado ao Protheus? Uma fração disso — que se paga nos primeiros meses.</p>
+<hr>
+<h2>"Mas a gente se vira com o que tem"</h2>
+<p>Essa é a frase mais cara do mundo dos negócios.</p>
+<p>Se virar com o que tem significa continuar pagando R$ 10.000 por mês em trabalho manual que não precisava existir. Significa continuar tomando decisão com dado de três dias atrás. Significa continuar descobrindo o problema quando já é tarde pra resolver.</p>
+<p>Não ter BI não é economizar. É pagar mais caro de um jeito que não aparece no orçamento.</p>`
+  }
+];
+
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function showArticle(idx) {
+  previousPage = document.querySelector('.page.active').id.replace('page-', '');
+  const a = articles[idx];
+  document.getElementById('art-tag').textContent = a.tag;
+  document.getElementById('art-title').textContent = a.title;
+  document.getElementById('art-body').innerHTML = a.body;
+  showPage('article');
+}
+
+function goBackFromArticle() {
+  showPage(previousPage);
+}
+</script>
+</body>
+</html>
