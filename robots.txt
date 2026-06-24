@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://bi-protheus.vercel.app/sitemap.xml
