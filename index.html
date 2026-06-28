@@ -261,6 +261,21 @@ footer p { font-size: 13px; color: var(--muted); }
   .case-grid { grid-template-columns: 1fr 1fr; }
   .contact-grid { grid-template-columns: 1fr 1fr; }
   @media (max-width: 780px) {
+    /* DASH BLOCKS — stack vertically */
+    .dash-block-inner {
+      grid-template-columns: 1fr !important;
+      gap: 24px !important;
+    }
+    .dash-block-inner.reverse .dash-content { order: 1 !important; }
+    .dash-block-inner.reverse .dash-visual { order: 2 !important; }
+    .dash-block { padding: 40px 0 !important; }
+    .dash-img { border-radius: 8px !important; }
+    .dash-kpis { grid-template-columns: 1fr 1fr !important; gap: 8px !important; }
+    .dash-kpi-val { font-size: 17px !important; }
+    .dash-content h3 { font-size: 20px !important; }
+    .dash-content .dash-desc { font-size: 15px !important; }
+
+    /* CASE STUDY */
     .case-grid { grid-template-columns: 1fr !important; }
     .contact-grid { grid-template-columns: 1fr !important; }
     .case-header-flex { flex-direction: column; }
@@ -271,6 +286,10 @@ footer p { font-size: 13px; color: var(--muted); }
     #case-anchor .section-inner > div > div:first-child { padding: 24px 20px !important; }
     #case-anchor .section-inner > div > div:last-child { padding: 24px 16px !important; }
     #contato-anchor .section-inner > div:last-child { grid-template-columns: 1fr !important; }
+
+    /* PORTFOLIO SECTION */
+    #portfolio-anchor { padding-left: 0 !important; padding-right: 0 !important; }
+    .portfolio-intro { padding: 48px 16px 24px !important; }
   }
 
   /* existing mobile */
