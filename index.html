@@ -141,7 +141,7 @@ h2 { font-family: var(--font-display); font-size: clamp(26px, 3.8vw, 42px); font
 .step p { color: var(--muted); font-size: 15px; line-height: 1.65; }
 
 /* STATS */
-.stats-bg { background: var(--accent); border-top: none; border-bottom: none; }
+.stats-bg { background: linear-gradient(135deg, #1A5FA8 0%, #1E7ECF 60%, #134A85 100%); border-top: none; border-bottom: none; }
 .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 48px; }
 .stat-num { font-family: var(--font-display); font-size: 48px; font-weight: 700; line-height: 1; margin-bottom: 8px; color: #fff; }
 .stat-num span { color: #7EC8F5; }
@@ -391,6 +391,26 @@ footer p { font-size: 13px; color: var(--muted); }
   @media (max-width: 640px) {
     .nav-cta-inline { display: none !important; }
   }
+
+/* PROBLEM SECTION */
+.problem-section { background: linear-gradient(135deg, #1A5FA8 0%, #1E7ECF 60%, #134A85 100%) !important; }
+.problem-section .problem-card { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); }
+.problem-section .problem-card h3 { color: #fff; }
+.problem-section .problem-card p { color: rgba(255,255,255,0.7); }
+.problem-section .problem-icon { filter: brightness(0) invert(1) opacity(0.85); }
+.problem-grid { background: transparent !important; border-color: transparent !important; }
+
+/* ARTICLES SECTION */
+.articles-section { background: linear-gradient(135deg, #1A5FA8 0%, #1E7ECF 60%, #134A85 100%) !important; border-top: none !important; }
+.articles-section .audience-card { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.12); }
+.articles-section .audience-card:hover { border-color: rgba(255,255,255,0.35); box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+.articles-section .audience-card h3 { color: #fff; }
+.articles-section .audience-card p { color: rgba(255,255,255,0.68); }
+.articles-section .article-tag { color: #7EC8F5; }
+.articles-section .btn-ghost { color: rgba(255,255,255,0.7); }
+.articles-section .btn-ghost:hover { color: #fff; }
+
+.gradient-bg { background: linear-gradient(135deg, #1A5FA8 0%, #1E7ECF 60%, #134A85 100%) !important; }
 </style>
 </head>
 <body>
@@ -434,11 +454,11 @@ footer p { font-size: 13px; color: var(--muted); }
     </div>
   </div>
 
-  <section>
+  <section class="problem-section">
     <div class="section-inner">
-      <div class="section-label">O problema</div>
-      <h2>O Protheus tem os dados.<br>Mas onde estão as respostas?</h2>
-      <p class="section-desc">A maioria das empresas que usam Protheus toma decisões com relatórios estáticos, planilhas enviadas por e-mail e reuniões baseadas em dados de ontem.</p>
+      <div class="section-label" style="color:rgba(255,255,255,0.6)">O problema</div>
+      <h2 style="color:#fff">O Protheus tem os dados.<br>Mas onde estão as respostas?</h2>
+      <p class="section-desc" style="color:rgba(255,255,255,0.72);max-width:540px">A maioria das empresas que usam Protheus toma decisões com relatórios estáticos, planilhas enviadas por e-mail e reuniões baseadas em dados de ontem.</p>
       <div class="problem-grid">
         <div class="problem-card"><div class="problem-icon">📊</div><h3>Relatórios do Protheus que ninguém lê</h3><p>Saídas padrão do ERP são difíceis de interpretar e chegam tarde demais para mudar qualquer coisa.</p></div>
         <div class="problem-card"><div class="problem-icon">📁</div><h3>Excel no meio do caminho</h3><p>Alguém exporta, alguém formata, alguém consolida — e o número muda a cada versão do arquivo.</p></div>
@@ -472,18 +492,7 @@ footer p { font-size: 13px; color: var(--muted); }
     </div>
   </section>
 
-  <section>
-    <div class="section-inner">
-      <div class="section-label">Para quem é</div>
-      <h2>Indústria, varejo e logística<br>que usam Protheus.</h2>
-      <p class="section-desc">Foco em empresas de até 500 funcionários que já têm o ERP rodando mas ainda não extraem o real valor dos dados que ele guarda.</p>
-      <div class="audience-grid">
-        <div class="audience-card"><div class="audience-icon">📦</div><h3>Gestor de Suprimentos</h3><p>Cansado de descobrir a ruptura depois que ela acontece. Quer enxergar o ponto de pedido antes — não depois da parada.</p></div>
-        <div class="audience-card"><div class="audience-icon">📊</div><h3>Controller e CFO</h3><p>Passa horas consolidando planilhas para fechar o mês. Precisa de margem, custo e estoque num único painel sem depender do TI.</p></div>
-        <div class="audience-card"><div class="audience-icon">⚙️</div><h3>Diretor de Operações</h3><p>Toma decisão em reunião com dado de três dias atrás. Quer indicadores de produção, estoque e compras em tempo real na tela.</p></div>
-      </div>
-    </div>
-  </section>
+
 
   <!-- PORTFOLIO -->
   <section class="portfolio-section" id="portfolio-anchor">
@@ -670,11 +679,11 @@ footer p { font-size: 13px; color: var(--muted); }
     </div>
   </section>
 
-  <section style="border-top:1px solid var(--border)">
+  <section class="articles-section">
     <div class="section-inner">
-      <div class="section-label">Artigos técnicos</div>
-      <h2>Para quem está no banco<br>de dados do Protheus.</h2>
-      <p class="section-desc">Artigos escritos por quem conhece o banco de dados do Protheus por dentro — não só a teoria do BI.</p>
+      <div class="section-label" style="color:rgba(255,255,255,0.6)">Artigos técnicos</div>
+      <h2 style="color:#fff">Para quem está no banco<br>de dados do Protheus.</h2>
+      <p class="section-desc" style="color:rgba(255,255,255,0.72)">Artigos escritos por quem conhece o banco de dados do Protheus por dentro — não só a teoria do BI.</p>
       <div class="audience-grid">
         <div class="audience-card" onclick="showArticle(0)" style="cursor:pointer">
           <div class="article-tag">Técnico</div>
@@ -693,7 +702,7 @@ footer p { font-size: 13px; color: var(--muted); }
         </div>
       </div>
       <div style="margin-top:32px;text-align:center">
-        <button class="btn-ghost" onclick="showPage('blog')">Ver todos os artigos técnicos →</button>
+        <button class="btn-ghost" onclick="showPage('blog')"><span style="color:rgba(255,255,255,0.7)">Ver todos os artigos técnicos →</span></button>
       </div>
     </div>
   </section>
@@ -710,7 +719,7 @@ footer p { font-size: 13px; color: var(--muted); }
       <div style="background:var(--bg);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-md)">
 
         <!-- HEADER DO CASE -->
-        <div style="background:linear-gradient(135deg,#1A5FA8,#1E7ECF);padding:36px 40px">
+        <div style="background:linear-gradient(135deg, #1A5FA8 0%, #1E7ECF 60%, #134A85 100%);padding:36px 40px">
           <div class="case-header-flex" style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:20px">
             <div>
               <div style="font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:10px;font-family:'Space Grotesk',sans-serif">Case de Sucesso · Benassi · 2020–2022</div>
@@ -865,121 +874,10 @@ footer p { font-size: 13px; color: var(--muted); }
     </div>
   </section>
 
-  <section style="border-top:1px solid var(--border); background:var(--surface)">
-    <div class="section-inner">
-      <div class="section-label">Quem faz</div>
-      <h2>Especialista em BI<br>para Protheus.</h2>
-      <div class="sobre-grid">
-        <div class="sobre-text">
-          <p>Engenheiro de Produção com MBA em Data Science pela <strong>USP</strong> e mais de 5 anos de experiência em Analytics e BI em empresas como <strong>Localiza, Globo, Carrefour e Smiles</strong>.</p>
-          <p>Anos de trabalho com o <strong>Protheus na prática</strong> — os módulos de estoque, compras, faturamento e produção não só como analista, mas como alguém que precisou extrair valor real dessas tabelas para decisões estratégicas.</p>
-          <p>Não é uma agência. Você fala direto com quem entrega do diagnóstico ao dashboard — incluindo configuração do Gateway, modelagem das tabelas do Protheus e publicação no Power BI Service.</p>
-        </div>
-        <div class="certs">
-          <div class="cert"><span class="cert-dot"></span>MBA Data Science & Analytics — USP</div>
-          <div class="cert"><span class="cert-dot"></span>Expert Tableau — Tableau (48h)</div>
-          <div class="cert"><span class="cert-dot"></span>Especialista Power BI — DSA (80h)</div>
-          <div class="cert"><span class="cert-dot"></span>Looker & Looker Studio — Google Cloud</div>
-          <div class="cert"><span class="cert-dot"></span>Lean Six Sigma Green Belt — FIPEN</div>
-          <div class="cert"><span class="cert-dot"></span>Engenharia de Produção — USJT</div>
-        </div>
-      </div>
-    </div>
-  </section>
+  
 
 
-  <!-- FORMULÁRIO DE CONTATO -->
-  <section style="border-top:1px solid var(--border); background:var(--bg)" id="contato-anchor">
-    <div class="section-inner">
-      <div class="section-label">Contato</div>
-      <h2>Prefere escrever?<br>Manda uma mensagem.</h2>
-      <p class="section-desc" style="margin-bottom:0">Respondo em até 24 horas úteis. Se preferir resposta imediata, use o WhatsApp.</p>
-
-      <div class="contact-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:48px;align-items:start">
-
-        <div>
-          <form id="contactForm" onsubmit="submitForm(event)" style="display:flex;flex-direction:column;gap:16px">
-
-            <div>
-              <label style="font-size:13px;font-weight:600;color:var(--text);display:block;margin-bottom:6px;font-family:'Space Grotesk',sans-serif">Nome *</label>
-              <input type="text" id="fname" required placeholder="Seu nome completo"
-                style="width:100%;padding:12px 16px;border:1px solid var(--border);border-radius:8px;font-size:15px;font-family:'Inter',sans-serif;background:var(--surface);color:var(--text);outline:none;transition:border-color 0.2s"
-                onfocus="this.style.borderColor='#1A5FA8'" onblur="this.style.borderColor='var(--border)'">
-            </div>
-
-            <div>
-              <label style="font-size:13px;font-weight:600;color:var(--text);display:block;margin-bottom:6px;font-family:'Space Grotesk',sans-serif">E-mail *</label>
-              <input type="email" id="femail" required placeholder="seu@email.com.br"
-                style="width:100%;padding:12px 16px;border:1px solid var(--border);border-radius:8px;font-size:15px;font-family:'Inter',sans-serif;background:var(--surface);color:var(--text);outline:none;transition:border-color 0.2s"
-                onfocus="this.style.borderColor='#1A5FA8'" onblur="this.style.borderColor='var(--border)'">
-            </div>
-
-            <div>
-              <label style="font-size:13px;font-weight:600;color:var(--text);display:block;margin-bottom:6px;font-family:'Space Grotesk',sans-serif">Empresa</label>
-              <input type="text" id="fcompany" placeholder="Nome da empresa (opcional)"
-                style="width:100%;padding:12px 16px;border:1px solid var(--border);border-radius:8px;font-size:15px;font-family:'Inter',sans-serif;background:var(--surface);color:var(--text);outline:none;transition:border-color 0.2s"
-                onfocus="this.style.borderColor='#1A5FA8'" onblur="this.style.borderColor='var(--border)'">
-            </div>
-
-            <div>
-              <label style="font-size:13px;font-weight:600;color:var(--text);display:block;margin-bottom:6px;font-family:'Space Grotesk',sans-serif">Mensagem *</label>
-              <textarea id="fmsg" required rows="4" placeholder="Conte brevemente o que você precisa — qual módulo do Protheus usa, qual é a dor principal..."
-                style="width:100%;padding:12px 16px;border:1px solid var(--border);border-radius:8px;font-size:15px;font-family:'Inter',sans-serif;background:var(--surface);color:var(--text);outline:none;resize:vertical;transition:border-color 0.2s"
-                onfocus="this.style.borderColor='#1A5FA8'" onblur="this.style.borderColor='var(--border)'"></textarea>
-            </div>
-
-            <button type="submit"
-              style="background:var(--accent);color:#fff;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;padding:14px 28px;border-radius:8px;border:none;cursor:pointer;transition:background 0.2s;text-align:left;display:flex;align-items:center;justify-content:center;gap:8px"
-              onmouseover="this.style.background='#134A85'" onmouseout="this.style.background='var(--accent)'">
-              Enviar mensagem →
-            </button>
-
-            <div id="formSuccess" style="display:none;background:var(--green-bg);border:1px solid rgba(21,128,61,0.25);border-radius:8px;padding:14px 18px;font-size:14px;color:var(--green);font-weight:500">
-              ✓ Mensagem enviada! Retorno em até 24 horas úteis.
-            </div>
-
-          </form>
-        </div>
-
-        <div style="display:flex;flex-direction:column;gap:20px">
-          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px">
-            <div style="font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;margin-bottom:14px">Resposta rápida</div>
-            <a href="https://wa.me/5511984993099?text=Olá%2C%20quero%20saber%20mais%20sobre%20BI%20para%20Protheus" target="_blank"
-              style="display:flex;align-items:center;gap:12px;padding:14px 18px;background:#25D366;border-radius:8px;text-decoration:none;transition:background 0.2s"
-              onmouseover="this.style.background='#1eb756'" onmouseout="this.style.background='#25D366'">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-              <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;color:#fff">WhatsApp — resposta imediata</span>
-            </a>
-          </div>
-
-          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px">
-            <div style="font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;margin-bottom:14px">O que esperar</div>
-            <div style="display:flex;flex-direction:column;gap:10px">
-              <div style="display:flex;gap:10px;align-items:flex-start">
-                <span style="color:var(--accent);font-weight:700;flex-shrink:0">01</span>
-                <span style="font-size:14px;color:var(--muted)">Você manda a mensagem com sua dor principal</span>
-              </div>
-              <div style="display:flex;gap:10px;align-items:flex-start">
-                <span style="color:var(--accent);font-weight:700;flex-shrink:0">02</span>
-                <span style="font-size:14px;color:var(--muted)">Retorno em até 24h com perguntas sobre seu Protheus</span>
-              </div>
-              <div style="display:flex;gap:10px;align-items:flex-start">
-                <span style="color:var(--accent);font-weight:700;flex-shrink:0">03</span>
-                <span style="font-size:14px;color:var(--muted)">Diagnóstico gratuito de 30 min para avaliar o que é possível</span>
-              </div>
-              <div style="display:flex;gap:10px;align-items:flex-start">
-                <span style="color:var(--accent);font-weight:700;flex-shrink:0">04</span>
-                <span style="font-size:14px;color:var(--muted)">Proposta clara com escopo, prazo e valor</span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="cta-section">
+  <section class="cta-section gradient-bg">
     <div class="section-inner">
       <div class="section-label" style="color:rgba(255,255,255,0.6)">Próximo passo</div>
       <h2>Diagnóstico gratuito de 30 minutos.</h2>
@@ -1272,31 +1170,6 @@ footer p { font-size: 13px; color: var(--muted); }
 })();
 
 
-function submitForm(e) {
-  e.preventDefault();
-  var name    = document.getElementById('fname').value;
-  var email   = document.getElementById('femail').value;
-  var company = document.getElementById('fcompany').value;
-  var msg     = document.getElementById('fmsg').value;
-
-  // Build WhatsApp message as fallback
-  var wppMsg = encodeURIComponent(
-    'Olá, vim pelo site BI.Protheus.\n\n' +
-    'Nome: ' + name + '\n' +
-    (company ? 'Empresa: ' + company + '\n' : '') +
-    'E-mail: ' + email + '\n\n' +
-    'Mensagem:\n' + msg
-  );
-
-  // Show success
-  document.getElementById('formSuccess').style.display = 'block';
-  document.getElementById('contactForm').reset();
-
-  // Open WhatsApp after short delay
-  setTimeout(function(){
-    window.open('https://wa.me/5511984993099?text=' + wppMsg, '_blank');
-  }, 800);
-}
 
 
 function toggleMenu() {
