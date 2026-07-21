@@ -14,7 +14,7 @@
 <meta property="og:url" content="https://bi-protheus.vercel.app/">
 <meta property="og:title" content="BI para Protheus | Dashboards Power BI + TOTVS em tempo real">
 <meta property="og:description" content="Conexão direta entre Power BI e seu ERP Protheus. Estoque, giro, cobertura, ABC e ruptura — sem Excel, sem TI, sem espera.">
-<meta property="og:image" content="https://bi-protheus.vercel.app/og.png">
+<meta property="og:image" content="https://bi-protheus.vercel.app/og.png"><!-- Criar og.png 1200x630px e subir no repo -->
 <meta property="og:locale" content="pt_BR">
 
 <meta name="twitter:card" content="summary_large_image">
@@ -31,9 +31,31 @@
   "telephone": "+5511984993099",
   "areaServed": ["Betim", "Belo Horizonte", "Minas Gerais", "Brasil"],
   "serviceType": ["Business Intelligence", "Power BI", "TOTVS Protheus", "Consultoria de Dados"],
-  "priceRange": "$$"
+  "priceRange": "$$",
+  "sameAs": [
+    "https://www.linkedin.com/in/williamrigo",
+    "https://bi-protheus.vercel.app/"
+  ],
+  "offers": {
+    "@type": "Offer",
+    "description": "Diagnóstico gratuito de 30 minutos para projetos de BI com TOTVS Protheus",
+    "price": "0",
+    "priceCurrency": "BRL",
+    "availability": "https://schema.org/InStock"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5",
+    "reviewCount": "3",
+    "bestRating": "5"
+  }
 }
 </script>
+
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#1A5FA8">
+<meta name="geo.region" content="BR-MG">
+<meta name="geo.placename" content="Betim, Minas Gerais">
 
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -47,7 +69,7 @@
   --accent2: #1E7ECF;
   --accent-light: #EBF3FB;
   --text: #111827;
-  --muted: #4B5E7A;
+  --muted: #3D4F6A;
   --green: #15803D;
   --green-bg: #F0FDF4;
   --red: #B91C1C;
@@ -587,7 +609,7 @@ footer p { font-size: 13px; color: var(--muted); }
 
         <!-- Card 1 -->
         <div class="port-card">
-          <div class="port-img-wrap" onclick="openLbx(this.querySelector('img'))">
+          <div class="port-img-wrap" onclick="showPage('portfolio'); pfGoTo(0);" style="cursor:zoom-in">
             <img data-img="0" src="" alt="Gestão Estratégica de Estoque - Dashboard Power BI Protheus" class="port-img">
             <div class="port-zoom">🔍 Ver em tela cheia</div>
           </div>
@@ -610,7 +632,7 @@ footer p { font-size: 13px; color: var(--muted); }
 
         <!-- Card 2 -->
         <div class="port-card">
-          <div class="port-img-wrap" onclick="openLbx(this.querySelector('img'))">
+          <div class="port-img-wrap" onclick="showPage('portfolio'); pfGoTo(1);" style="cursor:zoom-in">
             <img data-img="1" src="" alt="Análise de Rentabilidade Comercial - Dashboard Power BI Protheus" class="port-img">
             <div class="port-zoom">🔍 Ver em tela cheia</div>
           </div>
@@ -633,7 +655,7 @@ footer p { font-size: 13px; color: var(--muted); }
 
         <!-- Card 3 -->
         <div class="port-card">
-          <div class="port-img-wrap" onclick="openLbx(this.querySelector('img'))">
+          <div class="port-img-wrap" onclick="showPage('portfolio'); pfGoTo(2);" style="cursor:zoom-in">
             <img data-img="2" src="" alt="Gestão Financeira e Fluxo de Caixa - Dashboard Power BI Protheus" class="port-img">
             <div class="port-zoom">🔍 Ver em tela cheia</div>
           </div>
@@ -1199,8 +1221,9 @@ footer p { font-size: 13px; color: var(--muted); }
 function toggleMenu() {
   var links = document.getElementById('navLinks');
   var btn = document.getElementById('navHamburger');
-  links.classList.toggle('open');
+  var isOpen = links.classList.toggle('open');
   btn.classList.toggle('open');
+  btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
 }
 function closeMenu() {
   document.getElementById('navLinks').classList.remove('open');
@@ -1726,6 +1749,12 @@ function showPage(name) {
   document.getElementById('page-' + name).classList.add('active');
   window.scrollTo(0, 0);
   if(name === 'portfolio' && window.loadPfImages) window.loadPfImages();
+  // Update aria-current
+  document.querySelectorAll('.nav-link').forEach(function(btn){
+    btn.removeAttribute('aria-current');
+  });
+  var activeNav = document.getElementById('nav' + name.charAt(0).toUpperCase() + name.slice(1));
+  if(activeNav) activeNav.setAttribute('aria-current', 'page');
 }
 
 function showArticle(idx) {
@@ -1777,9 +1806,13 @@ function goBackFromArticle() {
 <script>
 function openLbx(el) {
   var lbx = document.getElementById('lbx');
-  var img = document.getElementById('lbxImg');
-  img.src = el.src;
-  img.alt = el.alt;
+  var lbxImg = document.getElementById('lbxImg');
+  var idx = el.getAttribute('data-img');
+  // Use stored image data if src is empty (lazy loaded)
+  var src = el.src || (window._dashImgs && idx !== null ? window._dashImgs[parseInt(idx)] : '');
+  if (!src && window._dashImgs && idx !== null) src = window._dashImgs[parseInt(idx)];
+  lbxImg.src = src;
+  lbxImg.alt = el.alt;
   lbx.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -1792,7 +1825,7 @@ document.addEventListener('keydown', function(e){
 });
 </script>
 
-<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo da página"
   aria-label="Voltar ao topo"
   style="
     position:fixed; bottom:24px; right:24px; z-index:200;
