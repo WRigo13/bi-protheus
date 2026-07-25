@@ -512,6 +512,50 @@ footer p { font-size: 13px; color: var(--muted); }
 @media (max-width: 580px) {
   .port-grid { grid-template-columns: 1fr; }
 }
+
+/* CASE DESTAQUE (Benassi) */
+.case-highlight {
+  background: linear-gradient(135deg,#0F2E4F 0%,#134A85 55%,#1A5FA8 100%);
+  border-radius: 18px;
+  padding: 48px 40px;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 32px;
+  align-items: center;
+  box-shadow: 0 12px 40px rgba(19,74,133,0.25);
+}
+.case-highlight-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  border-left: 1px solid rgba(255,255,255,0.18);
+  padding-left: 32px;
+  min-width: 0;
+}
+.case-stat-num {
+  font-family: var(--font-display);
+  font-size: 34px; font-weight: 700; color: #fff; line-height: 1;
+}
+.case-stat-label { font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 4px; }
+
+@media (max-width: 760px) {
+  .case-highlight {
+    grid-template-columns: 1fr;
+    padding: 32px 24px;
+    gap: 28px;
+  }
+  .case-highlight-stats {
+    grid-template-columns: 1fr 1fr;
+    border-left: none;
+    border-top: 1px solid rgba(255,255,255,0.18);
+    padding-left: 0;
+    padding-top: 24px;
+  }
+}
+@media (max-width: 400px) {
+  .case-highlight { padding: 28px 20px; }
+  .case-stat-num { font-size: 28px; }
+}
 </style>
 </head>
 <body>
@@ -521,9 +565,10 @@ footer p { font-size: 13px; color: var(--muted); }
   <div class="nav-links">
     <button class="nav-link" onclick="showPage('home')">Início</button>
     <button class="nav-link" onclick="showPage('home'); setTimeout(function(){ document.getElementById('portfolio-anchor').scrollIntoView({behavior:'smooth'}); }, 100);">Portfólio</button>
+    <button class="nav-link" onclick="showPage('home'); setTimeout(function(){ document.getElementById('modulos-anchor').scrollIntoView({behavior:'smooth'}); }, 100);">Módulos</button>
     <button class="nav-link" onclick="document.getElementById('case-anchor').scrollIntoView({behavior:'smooth'})">Case</button>
     <button class="nav-link" onclick="showPage('blog')">Artigos</button>
-    <a class="nav-cta nav-cta-inline" href="https://wa.me/5511984993099?text=Olá%2C%20quero%20saber%20mais%20sobre%20BI%20para%20Protheus" target="_blank">WhatsApp</a>
+    <a class="nav-cta nav-cta-inline" href="https://wa.me/5511984993099?text=Olá%21%20Vi%20sua%20Landing%20Page%20e%20gostaria%20de%20agendar%20o%20Diagnóstico%20Gratuito%20de%2030%20minutos%20para%20avaliar%20a%20estrutura%20de%20dados%20do%20nosso%20Protheus." target="_blank">WhatsApp</a>
   </div>
 </nav>
 
@@ -533,10 +578,10 @@ footer p { font-size: 13px; color: var(--muted); }
   <section class="hero">
     <div class="hero-inner">
       <div class="eyebrow">Power BI + TOTVS Protheus</div>
-      <h1>Pare de decidir<br>com dados de ontem.<br><em>Seu Protheus em tempo real.</em></h1>
-      <p class="hero-sub">Conexão direta entre Power BI e o banco do Protheus — sem exportar Excel, sem depender do TI, sem planilha desatualizada. Estoque, giro, cobertura e ruptura visíveis em tempo real.</p>
+      <h1>Pare de decidir<br>com dados de ontem.<br><em>Seu TOTVS Protheus em tempo real.</em></h1>
+      <p class="hero-sub">Arquitetura Híbrida e Inteligente (Views Otimizadas e Carga Incremental) que entrega dados atualizados sem travar ou impactar a performance do seu banco de produção. Estoque, giro, cobertura e ruptura visíveis quando você precisa — sem exportar Excel, sem depender do TI.</p>
       <div class="hero-actions">
-        <a class="btn-primary" href="https://wa.me/5511984993099?text=Olá%2C%20quero%20saber%20mais%20sobre%20BI%20para%20Protheus" target="_blank">
+        <a class="btn-primary" href="https://wa.me/5511984993099?text=Olá%21%20Vi%20sua%20Landing%20Page%20e%20gostaria%20de%20agendar%20o%20Diagnóstico%20Gratuito%20de%2030%20minutos%20para%20avaliar%20a%20estrutura%20de%20dados%20do%20nosso%20Protheus." target="_blank">
           <svg class="wpp-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           Diagnóstico gratuito
         </a>
@@ -559,7 +604,7 @@ footer p { font-size: 13px; color: var(--muted); }
     <div class="section-inner">
       <div class="section-label" style="color:rgba(255,255,255,0.6)">O problema</div>
       <h2 style="color:#fff">O Protheus tem os dados.<br>Mas onde estão as respostas?</h2>
-      <p class="section-desc" style="color:rgba(255,255,255,0.72);max-width:540px">A maioria das empresas que usam Protheus toma decisões com relatórios estáticos, planilhas enviadas por e-mail e reuniões baseadas em dados de ontem.</p>
+      <p class="section-desc" style="color:rgba(255,255,255,0.72);max-width:540px">A maioria das empresas que utiliza o ERP TOTVS Protheus toma decisões baseadas em dados de ontem — com relatórios estáticos e planilhas enviadas por e-mail.</p>
       <div class="problem-grid">
         <div class="problem-card"><div class="problem-icon">📊</div><h3>Relatórios do Protheus que ninguém lê</h3><p>Saídas padrão do ERP são difíceis de interpretar e chegam tarde demais para mudar qualquer coisa.</p></div>
         <div class="problem-card"><div class="problem-icon">📁</div><h3>Excel no meio do caminho</h3><p>Alguém exporta, alguém formata, alguém consolida — e o número muda a cada versão do arquivo.</p></div>
@@ -596,13 +641,115 @@ footer p { font-size: 13px; color: var(--muted); }
 
 
 
+  <!-- VITRINE DE MÓDULOS PRONTOS -->
+  <section id="modulos-anchor" style="border-top:1px solid var(--border); background:var(--surface)">
+    <div class="section-inner">
+      <div class="section-label">Módulos prontos</div>
+      <h2>Três módulos.<br>Direto das tabelas do seu TOTVS Protheus.</h2>
+      <p class="section-desc">Cada módulo já vem modelado com as tabelas nativas do Protheus como fonte — sem inventar dado, sem depender de planilha paralela.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-top:8px">
+
+        <!-- Módulo 1 -->
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:32px 28px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:16px">
+          <div>
+            <div style="font-size:28px;margin-bottom:10px">📦</div>
+            <h3 style="font-family:var(--font-display);font-size:19px;font-weight:700;margin-bottom:10px">Gestão e Giro de Estoques</h3>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px">
+              <span class="dash-table-tag">SB1</span>
+              <span class="dash-table-tag">SB2</span>
+              <span class="dash-table-tag">SD2</span>
+              <span class="dash-table-tag">SB9</span>
+            </div>
+          </div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;font-size:14px;color:var(--muted);line-height:1.5">
+            <li style="display:flex;gap:8px"><span style="color:var(--accent)">✓</span>Cálculo automatizado de Cobertura e Giro de Estoque</li>
+            <li style="display:flex;gap:8px"><span style="color:var(--accent)">✓</span>Curva ABC parametrizada por margem</li>
+            <li style="display:flex;gap:8px"><span style="color:var(--accent)">✓</span>Alertas visuais de Ruptura (itens zerados e risco de falta)</li>
+          </ul>
+        </div>
+
+        <!-- Módulo 2 -->
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:32px 28px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:16px">
+          <div>
+            <div style="font-size:28px;margin-bottom:10px">📈</div>
+            <h3 style="font-family:var(--font-display);font-size:19px;font-weight:700;margin-bottom:10px">Performance Comercial e Margem Bruta</h3>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px">
+              <span class="dash-table-tag">SD2</span>
+              <span class="dash-table-tag">SF2</span>
+              <span class="dash-table-tag">SFT</span>
+            </div>
+          </div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;font-size:14px;color:var(--muted);line-height:1.5">
+            <li style="display:flex;gap:8px"><span style="color:var(--accent)">✓</span>Margem de contribuição líquida real (abatendo impostos e ST da tabela SFT)</li>
+            <li style="display:flex;gap:8px"><span style="color:var(--accent)">✓</span>Performance e positivação de carteira de clientes</li>
+            <li style="display:flex;gap:8px"><span style="color:var(--accent)">✓</span>Análise de Ticket Médio por Nota Fiscal</li>
+          </ul>
+        </div>
+
+        <!-- Módulo 3 -->
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:32px 28px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:16px">
+          <div>
+            <div style="font-size:28px;margin-bottom:10px">💰</div>
+            <h3 style="font-family:var(--font-display);font-size:19px;font-weight:700;margin-bottom:10px">Controladoria e Saúde Financeira</h3>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px">
+              <span class="dash-table-tag">SE1</span>
+              <span class="dash-table-tag">SE2</span>
+              <span class="dash-table-tag">SED</span>
+              <span class="dash-table-tag">SEB</span>
+            </div>
+          </div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;font-size:14px;color:var(--muted);line-height:1.5">
+            <li style="display:flex;gap:8px"><span style="color:var(--accent)">✓</span>Fluxo de caixa realizado vs. projetado</li>
+            <li style="display:flex;gap:8px"><span style="color:var(--accent)">✓</span>Régua de cobrança com Aging de inadimplência (30, 60, 90+ dias)</li>
+            <li style="display:flex;gap:8px"><span style="color:var(--accent)">✓</span>Distribuição de despesas por Natureza Financeira (SED)</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CASE DE SUCESSO -->
+  <section style="border-top:1px solid var(--border)">
+    <div class="section-inner" style="padding-top:0;padding-bottom:0">
+      <div class="case-highlight">
+        <div>
+          <div class="section-label" style="color:#7EC8F5;margin-bottom:12px">Case de Sucesso em Produção &amp; Logística</div>
+          <p style="color:rgba(255,255,255,0.88);font-size:17px;line-height:1.72;margin:0">Mais de <strong style="color:#fff">60 projetos</strong> de Business Intelligence entregues integrando o ERP Protheus como fonte única da verdade para a alta gestão. Destaque para o desenvolvimento de uma modelagem logística que <strong style="color:#fff">reduziu em 60% as perdas operacionais</strong> em 5 filiais simultâneas através de visões preditivas de inventário e controle de lotes.</p>
+        </div>
+        <div class="case-highlight-stats">
+          <div>
+            <div class="case-stat-num">60<span style="color:#7EC8F5">+</span></div>
+            <div class="case-stat-label">projetos de BI entregues</div>
+          </div>
+          <div>
+            <div class="case-stat-num">60<span style="color:#7EC8F5">%</span></div>
+            <div class="case-stat-label">de perdas reduzidas</div>
+          </div>
+          <div>
+            <div class="case-stat-num">5</div>
+            <div class="case-stat-label">filiais simultâneas</div>
+          </div>
+          <div>
+            <div class="case-stat-num">1</div>
+            <div class="case-stat-label">fonte única da verdade</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
   <!-- PORTFOLIO -->
   <section class="portfolio-section" id="portfolio-anchor" style="border-top:1px solid var(--border)">
     <div class="section-inner">
       <div class="portfolio-intro" style="padding:64px 0 40px">
         <div class="section-label">Portfólio</div>
         <h2>Dashboards reais.<br>Dados do Protheus.</h2>
-        <p class="section-desc" style="margin-bottom:0">Conectados diretamente ao banco do Protheus — sem exportar Excel, sem intermediários.</p>
+        <p class="section-desc" style="margin-bottom:0">Conectados à mesma base do TOTVS Protheus — sem exportar Excel, sem intermediários.</p>
       </div>
 
       <div class="port-grid">
@@ -689,7 +836,7 @@ footer p { font-size: 13px; color: var(--muted); }
         <p>O portfólio acima não foi construído com dados fictícios. Cada número — os 200 SKUs, os R$ 220K em estoque, os 16 itens zerados, os 3,2x de giro do Hidráulico — vem das tabelas reais do TOTVS Protheus: <strong>SB2, SD2, SE1 e SE2</strong>. O mesmo banco que está rodando agora na sua empresa.</p>
         <p>A leitura integrada dos três painéis conta uma história que nenhum relatório padrão do Protheus conseguiria contar sozinho: <strong>onde o dinheiro está parado, onde o risco de ruptura é iminente, quais grupos merecem atenção prioritária de compra e quais filiais estão operando no limite.</strong></p>
         <p>Esse é o tipo de visibilidade que transforma reunião de gestão em decisão — e não em debate sobre qual versão do Excel é a certa.</p>
-        <a class="btn-primary" href="https://wa.me/5511984993099?text=Olá%2C%20vi%20o%20portfólio%20e%20quero%20saber%20como%20conectar%20meu%20Protheus%20ao%20Power%20BI" target="_blank" style="display:inline-flex;margin:0 auto">
+        <a class="btn-primary" href="https://wa.me/5511984993099?text=Olá%21%20Vi%20sua%20Landing%20Page%20e%20gostaria%20de%20agendar%20o%20Diagnóstico%20Gratuito%20de%2030%20minutos%20para%20avaliar%20a%20estrutura%20de%20dados%20do%20nosso%20Protheus." target="_blank" style="display:inline-flex;margin:0 auto">
           <svg class="wpp-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           Quero isso no meu Protheus</a>
         <a href="https://app.powerbi.com/links/FO42y25ijb?ctid=abb00098-d916-489f-9429-aef79b262fee&pbi_source=linkShare" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--accent);border:2px solid var(--accent);font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;padding:13px 26px;border-radius:8px;text-decoration:none;transition:background 0.2s,color 0.2s;margin-top:0" onmouseover="this.style.background='var(--accent)';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='var(--accent)'">▶ Ver dashboard interativo
@@ -936,9 +1083,9 @@ footer p { font-size: 13px; color: var(--muted); }
   <section class="cta-section gradient-bg">
     <div class="section-inner">
       <div class="section-label" style="color:rgba(255,255,255,0.6)">Próximo passo</div>
-      <h2>Diagnóstico gratuito de 30 minutos.</h2>
-      <p>Sem compromisso. Você sai sabendo exatamente o que é possível fazer com os dados que já estão no seu Protheus.</p>
-      <a class="wpp-btn" href="https://wa.me/5511984993099?text=Olá%2C%20quero%20saber%20mais%20sobre%20BI%20para%20Protheus" target="_blank">
+      <h2>Agende um Diagnóstico Gratuito de 30 Minutos</h2>
+      <p>Uma conversa técnica e consultiva direto com o especialista para mapear os maiores gargalos do seu sistema atual, sem compromisso comercial.</p>
+      <a class="wpp-btn" href="https://wa.me/5511984993099?text=Olá%21%20Vi%20sua%20Landing%20Page%20e%20gostaria%20de%20agendar%20o%20Diagnóstico%20Gratuito%20de%2030%20minutos%20para%20avaliar%20a%20estrutura%20de%20dados%20do%20nosso%20Protheus." target="_blank">
         <svg class="wpp-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.753-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         Falar no WhatsApp
       </a>
@@ -1371,7 +1518,7 @@ function toggleInsight(){
     <div id="art-body" class="article-body"></div>
     <div class="article-cta">
       <p>Tem Protheus rodando e quer extrair mais valor dos seus dados?</p>
-      <a class="wpp-btn" href="https://wa.me/5511984993099?text=Olá%2C%20quero%20saber%20mais%20sobre%20BI%20para%20Protheus" target="_blank" style="display:inline-flex">
+      <a class="wpp-btn" href="https://wa.me/5511984993099?text=Olá%21%20Vi%20sua%20Landing%20Page%20e%20gostaria%20de%20agendar%20o%20Diagnóstico%20Gratuito%20de%2030%20minutos%20para%20avaliar%20a%20estrutura%20de%20dados%20do%20nosso%20Protheus." target="_blank" style="display:inline-flex">
         <svg class="wpp-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         Diagnóstico gratuito — 30 min
       </a>
@@ -1824,6 +1971,19 @@ document.addEventListener('keydown', function(e){
   if(e.key === 'Escape') closeLbx();
 });
 </script>
+
+<a id="wppFloat" href="https://wa.me/5511984993099?text=Olá%21%20Vi%20sua%20Landing%20Page%20e%20gostaria%20de%20agendar%20o%20Diagnóstico%20Gratuito%20de%2030%20minutos%20para%20avaliar%20a%20estrutura%20de%20dados%20do%20nosso%20Protheus." target="_blank" aria-label="Falar no WhatsApp"
+  style="
+    position:fixed; bottom:80px; right:24px; z-index:201;
+    width:56px; height:56px; border-radius:50%;
+    background:#25D366; color:#fff; border:none;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 6px 20px rgba(37,211,102,0.45);
+    transition:transform 0.15s;
+  "
+  onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
 
 <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo da página"
   aria-label="Voltar ao topo"
