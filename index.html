@@ -673,7 +673,7 @@ footer p { font-size: 13px; color: var(--muted); }
 @keyframes wpp-redirect-spin { to { transform: rotate(360deg); } }
 </style>
 
-<!-- Google tag (gtag.js) — GA4 + Google Ads. Falta só o label da conversão (veja linha ~2288). -->
+<!-- Google tag (gtag.js) — GA4 + Google Ads. Ambos configurados e ativos. -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3XNSRZQE0B"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -2284,10 +2284,8 @@ function fireWppLeadEvent() {
 function fireWppOutboundEvent() {
   try {
     if (typeof gtag === 'function') {
-      // Conta AW-18393732156 já configurada. Falta só o LABEL da conversão
-      // (a parte depois da barra "/"). Pegue em: Google Ads > Ferramentas >
-      // Conversões > [sua ação de conversão] > Ver detalhes da tag > "Snippet global do site"
-      gtag('event', 'conversion', { send_to: 'AW-18393732156/SUBSTITUA_PELO_LABEL' });
+      // Conversão "Enviar formulário de lead" configurada e ativa
+      gtag('event', 'conversion', { send_to: 'AW-18393732156/4EQoCPKep-McELyo6MJE' });
       gtag('event', 'contact', { event_category: 'engagement', event_label: 'WhatsApp click' });
     }
     if (typeof fbq === 'function') {
