@@ -680,7 +680,7 @@ footer p { font-size: 13px; color: var(--muted); }
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-3XNSRZQE0B');        // GA4 — ID real já configurado
-  gtag('config', 'AW-9033017674');       // Google Ads — ID real já configurado
+  gtag('config', 'AW-18393732156');      // Google Ads — ID real (corrigido)
 </script>
 
 <!-- Meta Pixel Code -->
@@ -2284,10 +2284,10 @@ function fireWppLeadEvent() {
 function fireWppOutboundEvent() {
   try {
     if (typeof gtag === 'function') {
-      // Conta AW-9033017674 já configurada. Falta só o LABEL da conversão
+      // Conta AW-18393732156 já configurada. Falta só o LABEL da conversão
       // (a parte depois da barra "/"). Pegue em: Google Ads > Ferramentas >
       // Conversões > [sua ação de conversão] > Ver detalhes da tag > "Snippet global do site"
-      gtag('event', 'conversion', { send_to: 'AW-9033017674/SUBSTITUA_PELO_LABEL' });
+      gtag('event', 'conversion', { send_to: 'AW-18393732156/SUBSTITUA_PELO_LABEL' });
       gtag('event', 'contact', { event_category: 'engagement', event_label: 'WhatsApp click' });
     }
     if (typeof fbq === 'function') {
