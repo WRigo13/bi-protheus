@@ -673,14 +673,14 @@ footer p { font-size: 13px; color: var(--muted); }
 @keyframes wpp-redirect-spin { to { transform: rotate(360deg); } }
 </style>
 
-<!-- Google tag (gtag.js) — GA4 + Google Ads. O ID do Google Ads (AW-XXXXXXXXX) ainda é placeholder. -->
+<!-- Google tag (gtag.js) — GA4 + Google Ads. Falta só o label da conversão (veja linha ~2288). -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3XNSRZQE0B"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-3XNSRZQE0B');        // GA4 — ID real já configurado
-  gtag('config', 'AW-XXXXXXXXX');       // <- substitua pelo seu ID de conversão Google Ads
+  gtag('config', 'AW-9033017674');       // Google Ads — ID real já configurado
 </script>
 
 <!-- Meta Pixel Code -->
@@ -2284,8 +2284,10 @@ function fireWppLeadEvent() {
 function fireWppOutboundEvent() {
   try {
     if (typeof gtag === 'function') {
-      // Substitua pelo ID/label real da sua conversão no Google Ads
-      gtag('event', 'conversion', { send_to: 'AW-XXXXXXXXX/XXXXXXXXXXXXXXXXXXXXX' });
+      // Conta AW-9033017674 já configurada. Falta só o LABEL da conversão
+      // (a parte depois da barra "/"). Pegue em: Google Ads > Ferramentas >
+      // Conversões > [sua ação de conversão] > Ver detalhes da tag > "Snippet global do site"
+      gtag('event', 'conversion', { send_to: 'AW-9033017674/SUBSTITUA_PELO_LABEL' });
       gtag('event', 'contact', { event_category: 'engagement', event_label: 'WhatsApp click' });
     }
     if (typeof fbq === 'function') {
